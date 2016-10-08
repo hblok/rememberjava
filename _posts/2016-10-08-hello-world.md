@@ -13,7 +13,7 @@ To start off, the smallest Java program there is.
 
 To compile and run from the command line:
 
-{% highlight cli %}
+{% highlight bash %}
   javac HelloWorld.java
   java HelloWorld
 {% endhighlight %}
