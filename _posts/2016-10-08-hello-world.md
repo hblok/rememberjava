@@ -8,5 +8,5 @@ categories: basics
 To start off, the smallest Java program there is.
 
 {% highlight java %}
- include src/HelloWorld.java 
+{% include src/HelloWorld.java %}
 {% endhighlight %}
