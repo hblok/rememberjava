@@ -20,24 +20,11 @@ public class JunitTestMethodsOrder {
     System.out.println(a + " beforeClass");
   }
 
-  @AfterClass
-  public static void tearDownAfterClass() throws Exception {
-    a++;
-    System.out.println(a + " afterClass");
-  }
-
   @Before
   public void setUp() throws Exception {
     a++;
     b++;
     System.out.println(a + " setup " + b);
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    a++;
-    b++;
-    System.out.println(a + " tearDown " + b);
   }
 
   @Test
@@ -52,7 +39,20 @@ public class JunitTestMethodsOrder {
   public void secondTest() {
     a++;
     b++;
-    System.out.println(a + " first " + b);
+    System.out.println(a + " second " + b);
     assertFalse(false);
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    a++;
+    b++;
+    System.out.println(a + " tearDown " + b);
+  }
+
+  @AfterClass
+  public static void tearDownAfterClass() throws Exception {
+    a++;
+    System.out.println(a + " afterClass");
   }
 }

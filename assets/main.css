@@ -1,4 +1,8 @@
 /**
+ * Custom main.css for rememberjava.com
+ */
+
+/**
  * Reset some basic elements
  */
 body, h1, h2, h3, h4, h5, h6,
@@ -41,7 +45,7 @@ img {
  * Figures
  */
 figure {
-  border-left: 5em;
+  border-left: 6em;
   border-right: 3em;
 }
 
@@ -100,7 +104,7 @@ code {
   font-size: 15px;
   border: 1px solid #e8e8e8;
   border-radius: 3px;
-  background-color: #eef; }
+  background-color: #f6f6ff; }
 
 code {
   padding: 1px 5px; }
@@ -336,7 +340,7 @@ pre {
 .highlight {
   background: #fff; }
   .highlighter-rouge .highlight {
-    background: #eef; }
+    background: #f6f6ff; }
   .highlight .c {
     color: #998;
     font-style: italic; }
