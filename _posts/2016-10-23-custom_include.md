@@ -34,9 +34,9 @@ slice:
     {{ file | slice: 132, 57 }}
 {% endhighlight %}
 
-includelines plugin: 
+includelines plugin:
+{% comment %}
 {% highlight java %}
     {% includelines src/com/rememberjava/junit/HelloJunit.java 7 12 %}
 {% endhighlight %}
-
-
+{% endcomment %}
