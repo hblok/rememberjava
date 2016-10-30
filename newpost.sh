@@ -12,6 +12,10 @@ date:   ${time}
 categories: 
 ---
 
+{% highlight java %}
+    {% include includemethod filename='src/com/rememberjava/.java' method='()' before=0  after=0 %}
+{% endhighlight %}
+
 
 {% highlight java %}
 {% include src/com/rememberjava/.java %}
