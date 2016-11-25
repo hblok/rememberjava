@@ -19,7 +19,7 @@ public class StreamFun {
 
   @Test
   public void printFileAlternative() throws IOException {
-    Path p = Paths.get("/etc", "issue");
+    Path p = Paths.get("/etc", "passwd");
     Stream<String> lines = Files.lines(p);
     Stream<String> sorted = lines.sorted();
     sorted.forEach(System.out::println);
@@ -37,7 +37,8 @@ public class StreamFun {
     assertFileEquals("/proc/cpuinfo", "/proc/cpuinfo");
   }
 
-  private void assertFileEquals(String expectedFile, String actualFile) throws IOException {
+  private void assertFileEquals(String expectedFile, String actualFile)
+      throws IOException {
     String[] actual = readFile(expectedFile);
     String[] expected = readFile(actualFile);
 
