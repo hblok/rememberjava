@@ -23,3 +23,5 @@ categories:
 
 EOF
 
+ls $file
+
