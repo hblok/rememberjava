@@ -1,2 +1,2 @@
 cp Gemfile.local Gemfile
-jekyll -s
+jekyll s
