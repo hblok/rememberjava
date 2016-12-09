@@ -264,6 +264,24 @@ pre {
     float: none;
     width: -webkit-calc(100% - (30px / 2));
     width: calc(100% - (30px / 2)); } }
+
+
+/**
+ * Pagination links
+ */
+.pagination-link {
+  background-color: #2a7ae2;
+  color: white;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: 4px;
+
+  pagination-link, pagination-link:visited, pagination-link:hover {
+    color: white;
+  }
+}
+
+
 /**
  * Page content
  */
