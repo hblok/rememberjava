@@ -38,6 +38,6 @@ To be continued...
 
 For the full [source of this first version, see here][src].
 
-[src]: https://github.com/hblok/rememberjava/tree/master/_includes/src/com/rememberjava
+[src]: https://github.com/hblok/rememberjava/tree/63a8f7153f0c36fa74368cc3456d33a1ff9d2989/_includes/src/com/rememberjava/calc
 [SEM]: https://docs.oracle.com/javase/8/docs/api/index.html?javax/script/ScriptEngineManager.html
 [NSEF]: http://docs.oracle.com/javase/8/docs/jdk/api/nashorn/jdk/nashorn/api/scripting/NashornScriptEngineFactory.html
