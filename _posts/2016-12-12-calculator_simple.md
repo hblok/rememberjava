@@ -2,7 +2,7 @@
 layout: post
 title:  A simple stupid calculator  
 date:   2016-12-12 20:03:03 +0100
-categories: 
+categories: calculator
 ---
 
 This post includes the UI (Swing) for a very simple calculator. There's not much to say about [the code][src], except for the rather stupid way it handles the calculator operation itself: Using a JavaScript engine! The [*ScriptEngineManager*][SEM] and the internal [*NashornScriptEngineFactory*][NSEF] JavaScript implementation have been around since Java 6 and 8 receptively. It makes it easy to execute a string as snippet of code, as seen below.
