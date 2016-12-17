@@ -42,7 +42,8 @@ public class TestTrayIcon {
       return;
     }
 
-    Image image = Toolkit.getDefaultToolkit().getImage("com/rememberjava/ui/favicon_16.png");
+    Image image = Toolkit.getDefaultToolkit().getImage(
+        "com/rememberjava/ui/favicon_16.png");
 
     TrayIcon trayIcon = new TrayIcon(image, "RJ Tray Demo", popup);
     trayIcon.setImageAutoSize(true);
