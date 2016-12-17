@@ -78,10 +78,12 @@ a {
   color: #2a7ae2;
   text-decoration: none; }
   a:visited {
-    color: #1756a9; }
+  /*  color: #1756a9;*/
+  }
   a:hover {
-    color: #111;
-    text-decoration: underline; }
+/*    color: #111;*/
+    text-decoration: underline;
+  }
 
 /**
  * Blockquotes
@@ -274,9 +276,10 @@ pre {
   color: white;
   font-weight: bolder;
   text-decoration: none;
-  padding: 4px;
+  padding: 6px;
+  border-radius: 12px;
 
-  pagination-link, pagination-link:visited, pagination-link:hover {
+  .pagination-link, .pagination-link:visited, .pagination-link:hover {
     color: white;
   }
 }
