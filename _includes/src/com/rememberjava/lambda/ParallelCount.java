@@ -23,7 +23,7 @@ public class ParallelCount {
 
   private static final int RANGE = 15;
 
-  private static final int AXIS_WIDTH = 35;
+  private int axisWidth;
 
   private static final int WORK_UNIT_MILLIS = 100;
 
@@ -37,6 +37,10 @@ public class ParallelCount {
   public void setup() {
     String methodName = name.getMethodName().split("\\[")[0];
     System.out.println("\n --- " + methodName + " ---");
+
+    int cpus = Runtime.getRuntime().availableProcessors();
+    int workUnits = RANGE * (RANGE + 1) / 2;
+    axisWidth = (int) ((workUnits / cpus) * 1.3);
 
     start = Duration.between(Instant.EPOCH, Instant.now());
 
@@ -55,7 +59,8 @@ public class ParallelCount {
 
   @Test
   public void parallelWork() {
-    System.out.printf("CPU count: %d\n\n", Runtime.getRuntime().availableProcessors());
+    System.out.printf("CPU count: %d\n\n",
+        Runtime.getRuntime().availableProcessors());
     printAxis(true);
 
     range.parallel().forEach(this::work);
@@ -68,7 +73,7 @@ public class ParallelCount {
     StringBuilder result = new StringBuilder();
     results.add(result);
 
-    char[] timestampSlots = new char[AXIS_WIDTH];
+    char[] timestampSlots = new char[axisWidth];
     Arrays.fill(timestampSlots, ' ');
 
     long startMillis = getNowMillis();
@@ -85,25 +90,20 @@ public class ParallelCount {
 
     long endMillis = getNowMillis();
 
-    result.append(String.format("%2d: %s [%4d - %4d]", units, new String(timestampSlots),
-        startMillis, endMillis));
+    result.append(String.format("%2d: %s [%4d - %4d]",
+        units, new String(timestampSlots), startMillis, endMillis));
   }
 
   private void printAxis(boolean header) {
     String row1 = "";
     String row2 = "";
-    for (int i = 0; i < AXIS_WIDTH - 1; i++) {
+    for (int i = 0; i < axisWidth - 1; i++) {
       row1 += i / 10;
       row2 += i % 10;
     }
 
-    if (header) {
-      System.out.println("    " + row1);
-      System.out.println("    " + row2);
-    } else {
-      System.out.println("    " + row2);
-      System.out.println("    " + row1);
-    }
+    System.out.println("    " + (header ? row1 : row2));
+    System.out.println("    " + (header ? row2 : row1));
   }
 
   private long getNowMillis() {
