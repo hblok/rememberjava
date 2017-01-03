@@ -1,6 +1,9 @@
 package com.rememberjava.midi;
 
+import java.util.Arrays;
+
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -12,19 +15,22 @@ import javax.sound.midi.Transmitter;
 
 import org.junit.Test;
 
+
 /**
  * See also: https://docs.oracle.com/javase/tutorial/sound/overview-MIDI.html
  */
 
 public class MidiApiTest {
 
+  private static final String SOFT_SYNTHESIZER = "SoftSynthesizer";
+
   @Test
-  public void testGetMidiDeviceInfo() {
+  public void testGetMidiDeviceInfo() throws MidiUnavailableException {
     Info[] infos = MidiSystem.getMidiDeviceInfo();
     for (Info info : infos) {
-      System.out.println("Info: " + info.getName() + ": " + info.getVendor() + ", "
-          + info.getVersion() + ", " + info.getDescription());
-
+      MidiDevice device = MidiSystem.getMidiDevice(info);
+      System.out.println("Info: " + device + ", '" + info.getName() + "',  '" + info.getVendor() + "', '"
+          + info.getVersion() + "', '" + info.getDescription() + "'");
     }
   }
 
@@ -58,7 +64,27 @@ public class MidiApiTest {
     msg.setMessage(ShortMessage.NOTE_ON, channel, note, velocity);
 
     long timeStamp = -1;
-    Receiver receiver = MidiSystem.getReceiver();
+    MidiDevice synthesizer = getSynthesizer("Gervill");
+    synthesizer.open();
+    Receiver receiver = synthesizer.getReceiver();
     receiver.send(msg, timeStamp);
+    receiver.close();
+  }
+  
+  private MidiDevice getSynthesizer(String deviceName) throws MidiUnavailableException {
+     return Arrays.asList(MidiSystem.getMidiDeviceInfo())
+         .stream()
+         .filter(info -> info.getName().equals(deviceName))
+         .map(info -> getDevice(info))
+         .filter(device -> device.getClass().getSimpleName().equals(SOFT_SYNTHESIZER))
+         .findFirst().get();
+  }
+
+  private MidiDevice getDevice(Info info) {
+    try {
+      return MidiSystem.getMidiDevice(info);
+    } catch (MidiUnavailableException e) {
+      return null;
+    }
   }
 }
