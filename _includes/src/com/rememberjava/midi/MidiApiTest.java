@@ -1,6 +1,7 @@
 package com.rememberjava.midi;
 
-import java.util.Arrays;
+import static com.rememberjava.midi.MidiUtils.filteredDeviceStream;
+import static com.rememberjava.midi.MidiUtils.onClassnameEquals;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiDevice;
@@ -19,7 +20,6 @@ import org.junit.Test;
 /**
  * See also: https://docs.oracle.com/javase/tutorial/sound/overview-MIDI.html
  */
-
 public class MidiApiTest {
 
   private static final String SOFT_SYNTHESIZER = "SoftSynthesizer";
@@ -29,8 +29,12 @@ public class MidiApiTest {
     Info[] infos = MidiSystem.getMidiDeviceInfo();
     for (Info info : infos) {
       MidiDevice device = MidiSystem.getMidiDevice(info);
-      System.out.println("Info: " + device + ", '" + info.getName() + "',  '" + info.getVendor() + "', '"
-          + info.getVersion() + "', '" + info.getDescription() + "'");
+      boolean isSequencer = device instanceof Sequencer;
+      boolean isSynthesizer = device instanceof Synthesizer;
+
+      System.out.println(
+          "Info: " + device + ", '" + info.getName() + "',  '" + info.getVendor() + "', '" + info.getVersion() + "', '"
+              + info.getDescription() + "', " + "sequencer=" + isSequencer + ", synthesizer=" + isSynthesizer);
     }
   }
 
@@ -72,19 +76,8 @@ public class MidiApiTest {
   }
   
   private MidiDevice getSynthesizer(String deviceName) throws MidiUnavailableException {
-     return Arrays.asList(MidiSystem.getMidiDeviceInfo())
-         .stream()
-         .filter(info -> info.getName().equals(deviceName))
-         .map(info -> getDevice(info))
-         .filter(device -> device.getClass().getSimpleName().equals(SOFT_SYNTHESIZER))
+     return filteredDeviceStream(deviceName)
+         .filter(onClassnameEquals(SOFT_SYNTHESIZER))
          .findFirst().get();
-  }
-
-  private MidiDevice getDevice(Info info) {
-    try {
-      return MidiSystem.getMidiDevice(info);
-    } catch (MidiUnavailableException e) {
-      return null;
-    }
   }
 }
