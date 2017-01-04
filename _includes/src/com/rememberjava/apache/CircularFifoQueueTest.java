@@ -76,13 +76,14 @@ public class CircularFifoQueueTest {
     });
     insertThread.start();
 
-    // Never stops
     Stream.generate(() -> {
       synchronized (queue) {
         return queue.poll();
       }
     })
-    .limit(20).forEach(System.out::println);
+    // Never stops without the limit
+    .limit(20)
+    .forEach(System.out::println);
   }
 
   private void sleep(long millis) {
