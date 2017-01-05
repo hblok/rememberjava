@@ -9,7 +9,7 @@ class Controller {
 
   private UiFrame view;
 
-  private String model = "";
+  private Model model = new Model();
 
   private ScriptEngine engine;
 
@@ -23,35 +23,25 @@ class Controller {
   }
 
   void typed(String text) {
-    model = text;
+    //model = text;
   }
 
   void click(Button button) {
     String txt = button.getText();
-    Type type = button.getType();
+    ButtonType type = button.getType();
 
     switch (type) {
     case DIGIT:
-      model += txt;
+      model.addDigit(txt);
       break;
     case OPERATOR:
-      model += " " + txt + " ";
+      model.addOperator(button.getOperator());
       break;
     case EQUAL:
-      calculate();
+      model.calculate();
       break;
     }
 
-    view.setDisplay(model);
-  }
-
-  void calculate() {
-    try {
-      Object eval = engine.eval(model);
-      model = eval.toString();
-    } catch (ScriptException e) {
-      // If the expression was invalid,
-      // don't modify the calculator display.
-    }
+    view.setDisplay(model.getDisplay());
   }
 }
