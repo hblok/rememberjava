@@ -4,6 +4,8 @@ import javax.sound.midi.MidiMessage;
 
 public abstract class AbstractMessage {
 
+  public static final int STATUS_MASK = 0xF0;
+  
   public static final int NOTE_OFF = 0x80;
   public static final int NOTE_ON = 0x90;
   public static final int CONTROL = 0xB0;
@@ -48,11 +50,19 @@ public abstract class AbstractMessage {
   }
 
   public boolean isNote() {
-    return (data[0] & NOTE_ON) == 0 || (data[0] & NOTE_OFF) == 0;
+    return data.length > 0 && (data[0] & STATUS_MASK) == NOTE_ON || (data[0] & STATUS_MASK) == NOTE_OFF;
   }
 
+  public boolean isControl() {
+    return data.length > 0 && (data[0] & STATUS_MASK) == CONTROL;
+  }
+  
+  public boolean isSystem() {
+    return data.length > 0 && (data[0] & STATUS_MASK) == SYSTEM;
+  }
+  
   public String getNote() {
-    if (!isNote() && data.length != 3) {
+    if (!isNote() || data.length != 3) {
       return null;
     }
 
@@ -61,7 +71,7 @@ public abstract class AbstractMessage {
 
   // TODO: move down
   public int getOctave() {
-    if (!isNote() && data.length != 3) {
+    if (!isNote() || data.length != 3) {
       return -1;
     }
 
@@ -71,4 +81,6 @@ public abstract class AbstractMessage {
   public String getNoteOctave() {
     return getNote() + getOctave();
   }
+  
+  public abstract String getControlName();
 }

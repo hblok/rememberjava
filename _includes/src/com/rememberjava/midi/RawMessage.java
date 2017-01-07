@@ -7,4 +7,9 @@ public class RawMessage extends AbstractMessage {
   public RawMessage(MidiMessage msg, long timestamp) {
     super(msg, timestamp);
   }
+
+  @Override
+  public String getControlName() {
+    return null;
+  }
 }

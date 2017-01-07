@@ -87,11 +87,34 @@ public class RolandTB03Test {
     ReceiverLimitedQueue<Tb03Message> queue = createTb03Queue();
 
     queue.eternalStream()
-    .filter(m -> m != null)
-    .limit(20)
-    .filter(m -> m.isNote())
-    .map(m -> m.getNoteOctave())
-    .forEach(System.out::println);
+      .filter(m -> m != null)
+      .limit(50)
+      .filter(m -> m.isNote())
+      .map(m -> m.getNoteOctave())
+      .forEach(System.out::println);
+  }
+  
+  @Test
+  public void testControllers() throws MidiUnavailableException {
+    ReceiverLimitedQueue<Tb03Message> queue = createTb03Queue();
+
+    queue.eternalStream()
+      .filter(m -> m != null)
+      .limit(20)
+      .filter(m -> m.isControl())
+      .map(m -> m.getControlName())
+      .forEach(System.out::println);
+  }
+  
+  @Test
+  public void testPattern() throws MidiUnavailableException {
+    ReceiverLimitedQueue<Tb03Message> queue = createTb03Queue();
+
+    queue.eternalStream()
+      .filter(m -> m != null)
+      .limit(20)
+      .filter(m -> !m.isSystem())
+      .forEach(System.out::println);
   }
 
   private ReceiverLimitedQueue<Tb03Message> createTb03Queue() throws MidiUnavailableException {
@@ -109,7 +132,7 @@ public class RolandTB03Test {
     for (byte b : msg.getRawData()) {
       System.out.print(AbstractMessage.midiByteToBinary(b) + " ");
     }
-    System.out.println();
+    System.out.println(msg.getNoteOctave());
   }
 
   private MidiDevice getMidiIn() throws MidiUnavailableException {
