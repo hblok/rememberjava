@@ -4,19 +4,15 @@ import static com.rememberjava.midi.MidiUtils.filteredDeviceStream;
 import static com.rememberjava.midi.MidiUtils.onClassnameEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 
 import org.junit.After;
 import org.junit.Test;
-
-import com.sun.xml.internal.bind.v2.model.util.ArrayInfoUtil;
 
 public class RolandTB03Test {
 
@@ -71,11 +67,11 @@ public class RolandTB03Test {
   }
   
   @Test
-  public void testNotes() throws MidiUnavailableException {
+  public void testMessageQueue() throws MidiUnavailableException {
     in = getMidiIn();
     in.open();
 
-    ReceiverLimitedQueue queue = new ReceiverLimitedQueue(20);
+    ReceiverLimitedQueue<RawMessage> queue = new ReceiverLimitedQueue<>(RawMessage::new, 20);
     in.getTransmitter().setReceiver(queue);
     
     queue.eternalStream()
@@ -86,27 +82,36 @@ public class RolandTB03Test {
     in.close();
   }
   
-  private void printMessage(MidiMessage msg) {
-    byte[] bytes = msg.getMessage();
-    for (int i = 0; i < bytes.length; i++) {
-      System.out.print(midiByteToBinary(bytes[i]) + " ");
+  @Test
+  public void testNotes() throws MidiUnavailableException {
+    ReceiverLimitedQueue<Tb03Message> queue = createTb03Queue();
+
+    queue.eternalStream()
+    .filter(m -> m != null)
+    .limit(20)
+    .filter(m -> m.isNote())
+    .map(m -> m.getNoteOctave())
+    .forEach(System.out::println);
+  }
+
+  private ReceiverLimitedQueue<Tb03Message> createTb03Queue() throws MidiUnavailableException {
+    in = getMidiIn();
+    in.open();
+
+    ReceiverLimitedQueue<Tb03Message> queue = new ReceiverLimitedQueue<>(Tb03Message::new, 20);
+    in.getTransmitter().setReceiver(queue);
+    
+    return queue;
+  }
+
+  private void printMessage(AbstractMessage msg) {
+    System.out.printf("%d: ", msg.getTimestamp());
+    for (byte b : msg.getRawData()) {
+      System.out.print(AbstractMessage.midiByteToBinary(b) + " ");
     }
     System.out.println();
   }
 
-  private String midiByteToBinary(byte b) {
-    return String.format("%8s", Integer.toBinaryString(midiByteToInt(b)));
-  }
-
-  
-  private String midiByteToHex(byte b) {
-    return Integer.toHexString(midiByteToInt(b));
-  }
-  
-  private int midiByteToInt(byte b) {
-    return (int) (b & 0xFF);
-  }
-  
   private MidiDevice getMidiIn() throws MidiUnavailableException {
     return filteredDeviceStream(BOUTIQUE)
         .filter(onClassnameEquals(MIDI_IN_DEVICE))

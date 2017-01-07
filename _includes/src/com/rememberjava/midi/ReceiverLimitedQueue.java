@@ -1,5 +1,6 @@
 package com.rememberjava.midi;
 
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 import javax.sound.midi.MidiMessage;
@@ -7,18 +8,24 @@ import javax.sound.midi.Receiver;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
-public class ReceiverLimitedQueue implements Receiver {
+public class ReceiverLimitedQueue<T extends AbstractMessage> implements Receiver {
 
-  private CircularFifoQueue<MidiMessage> queue;
+  @FunctionalInterface
+  public interface MessageConstructor<T> extends BiFunction<MidiMessage, Long, T> {}
 
-  public ReceiverLimitedQueue(int size) {
+  private final MessageConstructor<T> constructor;
+
+  private final CircularFifoQueue<T> queue;
+
+  public ReceiverLimitedQueue(MessageConstructor<T> constructor, int size) {
+    this.constructor = constructor;
     queue = new CircularFifoQueue<>(size);
   }
 
   @Override
   public void send(MidiMessage message, long timeStamp) {
     synchronized (queue) {
-      queue.offer(message);
+      queue.offer(constructor.apply(message, timeStamp));
     }
   }
 
@@ -28,7 +35,7 @@ public class ReceiverLimitedQueue implements Receiver {
    * @return returns the oldest message on the queue, or null if the queue is
    *         empty.
    */
-  public MidiMessage poll() {
+  public T poll() {
     synchronized (queue) {
       return queue.poll();
     }
@@ -39,11 +46,10 @@ public class ReceiverLimitedQueue implements Receiver {
    * 
    * @return a Stream of MidiMessages.
    */
-  public Stream<MidiMessage> eternalStream() {
+  public Stream<T> eternalStream() {
     return Stream.generate(this::poll);
   }
 
   @Override
-  public void close() {
-  }
+  public void close() {}
 }
