@@ -71,7 +71,7 @@ public class RolandTB03Test {
     in = getMidiIn(BOUTIQUE);
     in.open();
 
-    ReceiverLimitedQueue<RawMessage> queue = new ReceiverLimitedQueue<>(RawMessage::new, 20);
+    ReceiverLimitedQueue<RawMessage> queue = new ReceiverLimitedQueue<>(RawMessage::new, 50);
     in.getTransmitter().setReceiver(queue);
     
     queue.eternalStream()

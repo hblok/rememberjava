@@ -2,6 +2,14 @@ package com.rememberjava.midi;
 
 import javax.sound.midi.MidiMessage;
 
+/**
+ * Hold a {@link MidiMessage} and its timestamp, and deal with general constants
+ * and parsing.
+ * 
+ * Helpful documentation about the MIDI format:
+ * https://www.nyu.edu/classes/bello/FMT_files/9_MIDI_code.pdf
+ *
+ */
 public abstract class AbstractMessage {
 
   public static final int STATUS_MASK = 0xF0;
@@ -70,6 +78,7 @@ public abstract class AbstractMessage {
   }
 
   // TODO: move down
+  // The note number to octave level is different between vendors.
   public int getOctave() {
     if (!isNote() || data.length != 3) {
       return -1;
