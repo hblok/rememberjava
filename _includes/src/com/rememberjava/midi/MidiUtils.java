@@ -1,5 +1,8 @@
 package com.rememberjava.midi;
 
+import static com.rememberjava.midi.MidiUtils.filteredDeviceStream;
+import static com.rememberjava.midi.MidiUtils.onClassnameEquals;
+
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -7,12 +10,23 @@ import java.util.stream.Stream;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
 import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
 
 /**
  * Helper methods for the javax.sound.midi package.
  */
 public class MidiUtils {
 
+  /**
+   * Class name for a Midi Output Device.
+   */
+  public static final String MIDI_OUT_DEVICE = "MidiOutDevice";
+
+  /**
+   * Class name for a Midi Input Device.
+   */
+  public static final String MIDI_IN_DEVICE = "MidiInDevice";
+  
   /**
    * Returns {@link Info} representations for all available MIDI devices as a
    * stream.
@@ -77,6 +91,16 @@ public class MidiUtils {
     } catch (Exception e) {
       return null;
     }
+  }
+
+  /**
+   * Returns the first Midi Input Device which contains the specified string in
+   * its device name.
+   */
+  public static MidiDevice getMidiIn(String deviceName) throws MidiUnavailableException {
+    return filteredDeviceStream(deviceName)
+        .filter(onClassnameEquals(MIDI_IN_DEVICE))
+        .findFirst().get();
   }
 
 }

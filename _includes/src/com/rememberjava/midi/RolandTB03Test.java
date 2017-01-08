@@ -1,7 +1,9 @@
 package com.rememberjava.midi;
 
+import static com.rememberjava.midi.MidiUtils.MIDI_IN_DEVICE;
+import static com.rememberjava.midi.MidiUtils.MIDI_OUT_DEVICE;
 import static com.rememberjava.midi.MidiUtils.filteredDeviceStream;
-import static com.rememberjava.midi.MidiUtils.onClassnameEquals;
+import static com.rememberjava.midi.MidiUtils.getMidiIn;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -18,8 +20,6 @@ public class RolandTB03Test {
 
   // Roland Boutique
   private static final String BOUTIQUE = "Boutique";
-  
-  private static final String MIDI_IN_DEVICE = "MidiInDevice";
 
   private MidiDevice in;
 
@@ -37,12 +37,12 @@ public class RolandTB03Test {
         .collect(Collectors.toList());
 
     assertTrue(deviceClassnames.contains(MIDI_IN_DEVICE));
-    assertTrue(deviceClassnames.contains("MidiOutDevice"));
+    assertTrue(deviceClassnames.contains(MIDI_OUT_DEVICE));
   }
 
   @Test
   public void clockSignal() throws MidiUnavailableException, InterruptedException {
-    in = getMidiIn();
+    in = getMidiIn(BOUTIQUE);
     in.open();
 
     int transmitters = in.getMaxTransmitters();
@@ -68,7 +68,7 @@ public class RolandTB03Test {
   
   @Test
   public void testMessageQueue() throws MidiUnavailableException {
-    in = getMidiIn();
+    in = getMidiIn(BOUTIQUE);
     in.open();
 
     ReceiverLimitedQueue<RawMessage> queue = new ReceiverLimitedQueue<>(RawMessage::new, 20);
@@ -118,7 +118,7 @@ public class RolandTB03Test {
   }
 
   private ReceiverLimitedQueue<Tb03Message> createTb03Queue() throws MidiUnavailableException {
-    in = getMidiIn();
+    in = getMidiIn(BOUTIQUE);
     in.open();
 
     ReceiverLimitedQueue<Tb03Message> queue = new ReceiverLimitedQueue<>(Tb03Message::new, 20);
@@ -134,10 +134,4 @@ public class RolandTB03Test {
     }
     System.out.println(msg.getNoteOctave());
   }
-
-  private MidiDevice getMidiIn() throws MidiUnavailableException {
-    return filteredDeviceStream(BOUTIQUE)
-        .filter(onClassnameEquals(MIDI_IN_DEVICE))
-        .findFirst().get();
- }
 }
