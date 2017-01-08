@@ -1,10 +1,12 @@
-package com.rememberjava.midi;
+package com.rememberjava.midi.roland;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.sound.midi.MidiMessage;
+
+import com.rememberjava.midi.AbstractMessage;
 
 public abstract class RolandMessage extends AbstractMessage {
 

@@ -1,4 +1,4 @@
-package com.rememberjava.midi;
+package com.rememberjava.midi.roland;
 
 import java.util.Map;
 

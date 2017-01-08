@@ -1,4 +1,4 @@
-package com.rememberjava.midi;
+package com.rememberjava.midi.roland;
 
 import static com.rememberjava.midi.MidiUtils.MIDI_IN_DEVICE;
 import static com.rememberjava.midi.MidiUtils.MIDI_OUT_DEVICE;
@@ -15,6 +15,11 @@ import javax.sound.midi.Transmitter;
 
 import org.junit.After;
 import org.junit.Test;
+
+import com.rememberjava.midi.AbstractMessage;
+import com.rememberjava.midi.RawMessage;
+import com.rememberjava.midi.ReceiverLimitedQueue;
+import com.rememberjava.midi.SpyReceiver;
 
 public class RolandTB03Test {
 

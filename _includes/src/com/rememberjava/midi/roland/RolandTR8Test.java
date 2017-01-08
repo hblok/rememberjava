@@ -1,4 +1,4 @@
-package com.rememberjava.midi;
+package com.rememberjava.midi.roland;
 
 import static com.rememberjava.midi.MidiUtils.MIDI_IN_DEVICE;
 import static com.rememberjava.midi.MidiUtils.MIDI_OUT_DEVICE;
@@ -15,6 +15,8 @@ import javax.sound.midi.MidiUnavailableException;
 
 import org.junit.After;
 import org.junit.Test;
+
+import com.rememberjava.midi.ReceiverLimitedQueue;
 
 public class RolandTR8Test {
 

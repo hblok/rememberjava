@@ -24,11 +24,11 @@ public class SpyReceiver implements Receiver {
   public void close() {
   }
 
-  long getLastTimeStamp() {
+  public long getLastTimeStamp() {
     return lastTimeStamp;
   }
   
-  MidiMessage getLastMessage() {
+  public MidiMessage getLastMessage() {
     return lastMessage;
   }
 }
