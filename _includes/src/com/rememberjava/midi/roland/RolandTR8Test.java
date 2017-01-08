@@ -4,7 +4,6 @@ import static com.rememberjava.midi.MidiUtils.MIDI_IN_DEVICE;
 import static com.rememberjava.midi.MidiUtils.MIDI_OUT_DEVICE;
 import static com.rememberjava.midi.MidiUtils.filteredDeviceStream;
 import static com.rememberjava.midi.MidiUtils.getMidiIn;
-import static com.rememberjava.midi.MidiUtils.onClassnameEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -20,9 +19,6 @@ import com.rememberjava.midi.ReceiverLimitedQueue;
 
 public class RolandTR8Test {
 
-  // Roland AIRA TR8
-  private static final String TR8 = "TR8";
-  
   private MidiDevice in;
 
   @After
@@ -34,7 +30,7 @@ public class RolandTR8Test {
 
   @Test
   public void findDevice() {
-    List<String> deviceClassnames = filteredDeviceStream(TR8)
+    List<String> deviceClassnames = filteredDeviceStream(RolandUtils.TR8)
         .map(device -> device.getClass().getSimpleName())
         .collect(Collectors.toList());
 
@@ -56,7 +52,7 @@ public class RolandTR8Test {
   }
   
   private ReceiverLimitedQueue<Tr8Message> createTr8Queue() throws MidiUnavailableException {
-    in = getMidiIn(TR8);
+    in = getMidiIn(RolandUtils.TR8);
     System.out.println("Found device: " + in.getDeviceInfo().getName());
     in.open();
 

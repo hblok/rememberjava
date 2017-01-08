@@ -18,10 +18,21 @@ public abstract class AbstractMessage {
   public static final int NOTE_ON = 0x90;
   public static final int CONTROL = 0xB0;
   public static final int SYSTEM = 0xF0;
+  
+  public static final int SYS_EXCLUSIVE = 0xF0;
+  public static final int SYS_SONG_POSITION = 0xF2;
+  public static final int SYS_SONG_SELECT = 0xF3;
+  public static final int SYS_TIME_REQUEST = 0xF6;
+  public static final int SYS_EOX = 0xF7;
+  public static final int SYS_RT_TIMING_CLOCK = 0xF8;
+  public static final int SYS_RT_START = 0xFA;
+  public static final int SYS_RT_CONTINUE = 0xFB;
+  public static final int SYS_RT_STOP = 0xFC;
+  public static final int SYS_RT_ACTIVE_SENSING = 0xFE;
+  public static final int SYS_RT_RESET = 0xFF;
 
   private static final String[] NOTE_ORDER = {
       "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
-
 
   private final MidiMessage msg;
   private final long timestamp;
@@ -58,7 +69,17 @@ public abstract class AbstractMessage {
   }
 
   public boolean isNote() {
-    return data.length > 0 && (data[0] & STATUS_MASK) == NOTE_ON || (data[0] & STATUS_MASK) == NOTE_OFF;
+    return data.length > 0 && (
+        (data[0] & STATUS_MASK) == NOTE_ON ||
+        (data[0] & STATUS_MASK) == NOTE_OFF);
+  }
+  
+  public boolean noteOn() {
+    return data.length > 0 && (data[0] & STATUS_MASK) == NOTE_ON;
+  }
+  
+  public boolean noteOff() {
+    return data.length > 0 && (data[0] & STATUS_MASK) == NOTE_OFF;
   }
 
   public boolean isControl() {
@@ -67,6 +88,18 @@ public abstract class AbstractMessage {
   
   public boolean isSystem() {
     return data.length > 0 && (data[0] & STATUS_MASK) == SYSTEM;
+  }
+  
+  public boolean isSystemStart() {
+    return data.length > 0 && midiByteToInt(data[0]) == SYS_RT_START;
+  }
+  
+  public boolean isSystemStop() {
+    return data.length > 0 && midiByteToInt(data[0]) == SYS_RT_STOP;
+  }
+
+  public boolean isSystemContinue() {
+    return data.length > 0 && midiByteToInt(data[0]) == SYS_RT_CONTINUE;
   }
   
   public String getNote() {

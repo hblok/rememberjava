@@ -23,9 +23,6 @@ import com.rememberjava.midi.SpyReceiver;
 
 public class RolandTB03Test {
 
-  // Roland Boutique
-  private static final String BOUTIQUE = "Boutique";
-
   private MidiDevice in;
 
   @After
@@ -37,7 +34,7 @@ public class RolandTB03Test {
 
   @Test
   public void findDevice() {
-    List<String> deviceClassnames = filteredDeviceStream(BOUTIQUE)
+    List<String> deviceClassnames = filteredDeviceStream(RolandUtils.BOUTIQUE)
         .map(device -> device.getClass().getSimpleName())
         .collect(Collectors.toList());
 
@@ -47,7 +44,7 @@ public class RolandTB03Test {
 
   @Test
   public void clockSignal() throws MidiUnavailableException, InterruptedException {
-    in = getMidiIn(BOUTIQUE);
+    in = getMidiIn(RolandUtils.BOUTIQUE);
     in.open();
 
     int transmitters = in.getMaxTransmitters();
@@ -73,7 +70,7 @@ public class RolandTB03Test {
   
   @Test
   public void testMessageQueue() throws MidiUnavailableException {
-    in = getMidiIn(BOUTIQUE);
+    in = getMidiIn(RolandUtils.BOUTIQUE);
     in.open();
 
     ReceiverLimitedQueue<RawMessage> queue = new ReceiverLimitedQueue<>(RawMessage::new, 50);
@@ -81,7 +78,7 @@ public class RolandTB03Test {
     
     queue.eternalStream()
       .filter(m -> m != null)
-      .limit(20)
+      .limit(200)
       .forEach(this::printMessage);
     
     in.close();
@@ -105,7 +102,7 @@ public class RolandTB03Test {
 
     queue.eternalStream()
       .filter(m -> m != null)
-      .limit(20)
+      .limit(200)
       .filter(m -> m.isControl())
       .map(m -> m.getControlName())
       .forEach(System.out::println);
@@ -123,7 +120,7 @@ public class RolandTB03Test {
   }
 
   private ReceiverLimitedQueue<Tb03Message> createTb03Queue() throws MidiUnavailableException {
-    in = getMidiIn(BOUTIQUE);
+    in = getMidiIn(RolandUtils.BOUTIQUE);
     in.open();
 
     ReceiverLimitedQueue<Tb03Message> queue = new ReceiverLimitedQueue<>(Tb03Message::new, 20);
