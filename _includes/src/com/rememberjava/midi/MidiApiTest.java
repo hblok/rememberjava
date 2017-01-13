@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.util.stream.IntStream;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
+import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiFileFormat;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -30,8 +32,10 @@ import org.junit.Test;
 public class MidiApiTest {
 
   private static final String SOFT_SYNTHESIZER = "SoftSynthesizer";
-  
-  private static final String MIDI_FILE = "test.mid";
+
+  private static final String MIDI_FILE_PATH = "com/rememberjava/midi/test.mid";
+
+  private static final File MIDI_FILE = new File(MIDI_FILE_PATH);
 
   @Test
   public void testGetMidiDeviceInfo() throws MidiUnavailableException {
@@ -89,11 +93,38 @@ public class MidiApiTest {
          .filter(onClassnameEquals(SOFT_SYNTHESIZER))
          .findFirst().get();
   }
+
+  @Test
+  public void testWriteFile() throws InvalidMidiDataException, IOException {
+    int volume = 0x70;
+    int tick = 0;
+
+    Sequence sequence = new Sequence(Sequence.PPQ, 24);
+    Track track = sequence.createTrack();
+
+    MetaMessage meta = new MetaMessage();
+    String trackName = "First track";
+    meta.setMessage(0x03, trackName.getBytes(), trackName.length());
+    track.add(new MidiEvent(meta, tick));
+
+    int notes[] = IntStream.range(60, 73).toArray();
+
+    for (int note : notes) {
+      ShortMessage on = new ShortMessage(ShortMessage.NOTE_ON, note, volume);
+      track.add(new MidiEvent(on, tick));
+      tick += 4;
+
+      ShortMessage off = new ShortMessage(ShortMessage.NOTE_OFF, note, 0);
+      track.add(new MidiEvent(off, tick));
+      tick += 4;
+    }
+
+    MidiSystem.write(sequence, 1, MIDI_FILE);
+  }
   
   @Test
   public void testMidiFileFormat() throws InvalidMidiDataException, IOException {
-    File file = new File(MIDI_FILE);
-    MidiFileFormat format = MidiSystem.getMidiFileFormat(file);
+    MidiFileFormat format = MidiSystem.getMidiFileFormat(MIDI_FILE);
 
     System.out.println("bytes: " + format.getByteLength());
     System.out.println("length ms: " + format.getMicrosecondLength());
@@ -109,8 +140,7 @@ public class MidiApiTest {
   
   @Test
   public void testReadFile() throws InvalidMidiDataException, IOException {
-    File file = new File(MIDI_FILE);
-    Sequence sequence = MidiSystem.getSequence(file);
+    Sequence sequence = MidiSystem.getSequence(MIDI_FILE);
     
     System.out.println("tracks: " + sequence.getTracks().length);
     System.out.println("patches: " + sequence.getPatchList().length);
