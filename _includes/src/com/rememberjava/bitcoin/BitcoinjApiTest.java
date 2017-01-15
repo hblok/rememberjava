@@ -41,7 +41,7 @@ public class BitcoinjApiTest {
    */
   private static final String TPFAUCET_RETURN_ADR = "n2eMqTT929pb1RDNuqEnxdaLau1rxy3efi";
 
-  private static final File WALLET_DIR = new File("/dev/shm");
+  private static final File WALLET_DIR = new File("/tmp");
 
   private static final String WALLET_PREFIX = "rjtest";
 
@@ -55,12 +55,18 @@ public class BitcoinjApiTest {
 
   private volatile boolean sentCoins;
 
+  /**
+   * For all tests, connect to the TestNet3 network.
+   */
   @Before
   public void setup() {
     params = TestNet3Params.get();
     kit = new WalletAppKit(params, WALLET_DIR, WALLET_PREFIX);
   }
 
+  /**
+   * Connect, sync and wait till done.
+   */
   private void startSync() {
     kit.startAsync();
     kit.awaitRunning();
@@ -69,17 +75,36 @@ public class BitcoinjApiTest {
     wallet = kit.wallet();
   }
 
+  /**
+   * Disconnect and wait till done.
+   */
   @After
   public void teardown() {
     kit.stopAsync();
     kit.awaitTerminated();
   }
 
+  /**
+   * Even though it is possible to run without the logger implementation classes
+   * in place, it is very confusing and misleading.
+   * 
+   * The bitcoinj logs output connection and transaction information. Without
+   * them, it's difficult to know what is happening, and the application might
+   * seem "stuck".
+   */
   @Test
   public void checkLogger() {
     StaticLoggerBinder.getSingleton();
   }
 
+  /**
+   * Connects to the TestNet3 network and disconnects. If there is no walled
+   * stored at the specified location, a new one is created and relevant blocks
+   * are downloaded. This can take 1 to 2 minutes. If information is stale, it
+   * can also take a minute to update.
+   * 
+   * The walled used in this test is separate from the other tests.
+   */
   @Test
   public void testSync() {
     params = TestNet3Params.get();
@@ -92,6 +117,10 @@ public class BitcoinjApiTest {
     kit.awaitTerminated();
   }
 
+  /**
+   * Connects and prints address information about the test wallet (from the
+   * TestNet3 network).
+   */
   @Test
   public void printAddresses() {
     startSync();
@@ -106,6 +135,9 @@ public class BitcoinjApiTest {
     System.out.println(wallet.currentChangeAddress());
   }
 
+  /**
+   * Connects and prints wallet information (from the TestNet3 network).
+   */
   @Test
   public void printWalletInfo() {
     startSync();
@@ -116,6 +148,12 @@ public class BitcoinjApiTest {
     println("Version: " + wallet.getVersion());
   }
 
+  /**
+   * Waits for coins to be received on the prompted address. This test blocks
+   * until the coinsReceived callback is called.
+   * 
+   * (This test is commented out to avoid blocking the other tests).
+   */
   // @Test
   public void testReceive() {
     startSync();
@@ -130,22 +168,35 @@ public class BitcoinjApiTest {
     }
   }
 
+  /**
+   * Callback called when the coins have been received.
+   */
   private void coinsReceived(Wallet wallet, Transaction tx, Coin prevBalance, Coin newBalance) {
     Coin value = tx.getValueSentToMe(wallet);
     System.out.println("Received tx for " + value.toFriendlyString() + ": " + tx);
     receivedCoins = true;
   }
 
+  /**
+   * Sends test coins back to the TPFAUCET test network address. This test
+   * blocks until the broadcastComplete callback is called.
+   * 
+   * (This test is commented out to avoid blocking the other test and
+   * inadvertently sending away our money.
+   */
   // @Test
   public void testSend() throws InsufficientMoneyException {
     startSync();
 
-    Address returnAdr = Address.fromBase58(params, TPFAUCET_RETURN_ADR);
+    // Adjust how many coins to send. E.g. the minimum; or everything.
     Coin sendValue = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
     // Coin sendValue = wallet.getBalance().minus(Transaction.DEFAULT_TX_FEE);
+    
+    Address returnAdr = Address.fromBase58(params, TPFAUCET_RETURN_ADR);
     SendRequest request = SendRequest.to(returnAdr, sendValue);
 
     SendResult result = wallet.sendCoins(request);
+
     result.broadcastComplete.addListener(() -> {
       println("Coins were sent. Transaction hash: " + result.tx.getHashAsString());
       sentCoins = true;

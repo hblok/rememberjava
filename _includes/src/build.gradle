@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.slf4j:slf4j-simple:1.7.21'
     compile 'org.bitcoinj:bitcoinj-core:0.14.3'
 
     testCompile 'junit:junit:4.12'
