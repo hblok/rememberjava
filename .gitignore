@@ -19,6 +19,7 @@ _site
 .jekyll-metadata
 
 # Gradle
+.gradle
 _includes/src/gradle
 _includes/src/gradlew
 _includes/src/.gradle
