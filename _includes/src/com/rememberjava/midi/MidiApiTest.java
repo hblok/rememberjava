@@ -46,8 +46,13 @@ public class MidiApiTest {
       boolean isSynthesizer = device instanceof Synthesizer;
 
       System.out.println(
-          "Info: " + device + ", '" + info.getName() + "',  '" + info.getVendor() + "', '" + info.getVersion() + "', '"
-              + info.getDescription() + "', " + "sequencer=" + isSequencer + ", synthesizer=" + isSynthesizer);
+          "Info: " + device + ", '" + 
+              info.getName() + "',  '" + 
+              info.getVendor() + "', '" + 
+              info.getVersion() + "', '" + 
+              info.getDescription() + "', " + 
+              "sequencer=" + isSequencer + 
+              ", synthesizer=" + isSynthesizer);
     }
   }
 
@@ -71,13 +76,12 @@ public class MidiApiTest {
 
   @Test
   public void testPlayNote() throws InvalidMidiDataException, MidiUnavailableException {
-    ShortMessage msg = new ShortMessage();
-
     // 60 = middle C, C4 (or C3 or C5)
     // https://en.wikipedia.org/wiki/Scientific_pitch_notation#Similar_systems
     int channel = 0;
     int note = 60;
     int velocity = 127; // velocity (i.e. volume); 127 = high
+    ShortMessage msg = new ShortMessage();
     msg.setMessage(ShortMessage.NOTE_ON, channel, note, velocity);
 
     long timeStamp = -1;
@@ -121,23 +125,7 @@ public class MidiApiTest {
 
     MidiSystem.write(sequence, 1, MIDI_FILE);
   }
-  
-  @Test
-  public void testMidiFileFormat() throws InvalidMidiDataException, IOException {
-    MidiFileFormat format = MidiSystem.getMidiFileFormat(MIDI_FILE);
 
-    System.out.println("bytes: " + format.getByteLength());
-    System.out.println("length ms: " + format.getMicrosecondLength());
-    System.out.println("divisionType: " + format.getDivisionType());
-    System.out.println("resolution: " + format.getResolution());
-    System.out.println("type: " + format.getType());
-    System.out.println("properties: " + format.properties().size());
-
-    format.properties().entrySet().stream()
-      .map(e -> e.getValue() + "=" + e.getKey())
-      .forEach(System.out::println);
-  }
-  
   @Test
   public void testReadFile() throws InvalidMidiDataException, IOException {
     Sequence sequence = MidiSystem.getSequence(MIDI_FILE);
@@ -157,5 +145,21 @@ public class MidiApiTest {
         .forEach(System.out::print);
       System.out.println();
     }
+  }
+
+  @Test
+  public void testMidiFileFormat() throws InvalidMidiDataException, IOException {
+    MidiFileFormat format = MidiSystem.getMidiFileFormat(MIDI_FILE);
+
+    System.out.println("bytes: " + format.getByteLength());
+    System.out.println("length ms: " + format.getMicrosecondLength());
+    System.out.println("divisionType: " + format.getDivisionType());
+    System.out.println("resolution: " + format.getResolution());
+    System.out.println("type: " + format.getType());
+    System.out.println("properties: " + format.properties().size());
+
+    format.properties().entrySet().stream()
+      .map(e -> e.getValue() + "=" + e.getKey())
+      .forEach(System.out::println);
   }
 }
