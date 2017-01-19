@@ -41,9 +41,7 @@ Gradle integrates OK with Eclipse, but be careful with the "refresh" option. It 
 
 The following listing shows all the tests. It demonstrates similar functionality as seen in the [ForwardingService][fs-tut] class in the main [bitcoinj getting started guide][bitcoinj-start]. Hopefully, the code is a bit easier to read and run this way.
 
-{% highlight java %}
-{% include src/com/rememberjava/bitcoin/BitcoinjApiTest.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/bitcoin/BitcoinjApiTest.java' %}
 
 
 [bitcoinj]: https://bitcoinj.github.io

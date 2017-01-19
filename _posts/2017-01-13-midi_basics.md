@@ -29,9 +29,7 @@ Finally, the following methods demonstream MIDI file I/O.
 
 The full test case can be seen below. There's a few more helper classes and details [in the same package here][rj-midi]. Then there's some special implementation and details for the [Roland TB-03 and TR-8 devices here][rj-roland].
 
-{% highlight java %}
-{% include src/com/rememberjava/midi/MidiApiTest.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/midi/MidiApiTest.java' %}
 
 [midi-tut]: https://docs.oracle.com/javase/tutorial/sound/overview-MIDI.html
 [bello]: https://www.nyu.edu/classes/bello/FMT_files/9_MIDI_code.pdf

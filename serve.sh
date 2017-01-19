@@ -1,3 +1,4 @@
 cp Gemfile.local Gemfile
 rm Gemfile.lock
-jekyll s
+rm ./_site/assets/main.css
+jekyll s --baseurl ''

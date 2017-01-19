@@ -1,0 +1,36 @@
+{% comment %}{% raw %}<!--
+Includes a full Java source file in highlight. Folds it if it's viewed on the frontpage.
+
+Usage:
+  {% include javafile filename='src/HelloWorld.java' %}
+
+-->{% endraw %}{% endcomment %}
+
+<script>
+var hidden = true;
+
+function fileshowhide(id) {
+  var text = document.getElementById(id);
+  
+  hidden = !hidden;
+  if(hidden) {
+    text.style.display = "none";
+  } else {
+    text.style.display = "inline";
+  }
+}
+</script>
+
+{% assign id = page.id | replace:'/','' %}
+
+<div class="filebuttons">
+<div class="showhide"><button class="filebutton" onclick="fileshowhide('{{ id }}')">Show file</button></div>
+<a class="filebutton github" href="https://github.com/hblok/rememberjava/blob/master/_includes/{{ include.filename }}">GitHub</a>
+<a class="filebutton raw" href="https://raw.githubusercontent.com/hblok/rememberjava/master/_includes/{{ include.filename }}">Raw</a>
+</div>
+
+<div id="{{ id }}" class="javafile">
+{% highlight java %}
+{% include {{include.filename}} %}
+{% endhighlight %}
+</div>

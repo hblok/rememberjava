@@ -32,9 +32,7 @@ Now, it can be argued that this still constitutes a factory pattern, even if an 
 
 The full code listing of the example:
 
-{% highlight java %}
-{% include src/com/rememberjava/lambda/GenericConstructor.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/lambda/GenericConstructor.java' %}
 
 [FP]: https://en.wikipedia.org/wiki/Factory_method_pattern
 [FFFP]: http://discuss.joelonsoftware.com/?joel.3.219431.12

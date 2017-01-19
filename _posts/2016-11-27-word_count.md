@@ -35,7 +35,6 @@ The Java map will contain the following key-value pairs. Here, the words are als
 {% endhighlight %}
 
 The full listing:
-{% highlight java %}
-{% include src/com/rememberjava/lambda/WordCount.java %}
-{% endhighlight %}
+
+{% include javafile filename='src/com/rememberjava/lambda/WordCount.java' %}
 

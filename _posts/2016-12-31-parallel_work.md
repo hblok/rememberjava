@@ -96,10 +96,7 @@ CPU count: 2
 
 The full code list is here.
 
-{% highlight java %}
-{% include src/com/rememberjava/lambda/ParallelCount.java %}
-{% endhighlight %}
-
+{% include javafile filename='src/com/rememberjava/lambda/ParallelCount.java' %}
 
 
 [STREAMS]: https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html

@@ -160,17 +160,29 @@ pre {
   border-top: 5px solid #424242;
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
-  position: relative; }
+  position: relative;
+}
+
 
 .site-title {
-  font-size: 26px;
-  font-weight: 300;
-  line-height: 56px;
+  float: left;
+}
+
+.site-name {
+  font-size: 2em;
+  font-weight: 400;
   letter-spacing: -1px;
   margin-bottom: 0;
-  float: left; }
-  .site-title, .site-title:visited {
-    color: #424242; }
+  display: block;
+}
+
+.site-name, .site-name:visited {
+  color: #424242;
+}
+
+.site-sub {
+  display: block;
+}
 
 .site-nav {
   float: right;
@@ -284,6 +296,41 @@ pre {
   }
 }
 
+/**
+ * Home page colapse full Java files
+ */
+
+.showhide {
+  display: none;
+}
+
+.home-post .showhide {
+  display: inline;
+}
+
+.home-post .javafile {
+  display: none;
+}
+
+.filebutton {
+  background-color: #2a7ae2;
+  color: white;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 6px;
+  text-align: center;
+  display: inline;
+  width: 6em;
+}
+
+.github {
+  background-color: green;
+}
+
+.raw {
+  background-color: grey;
+}
 
 /**
  * Page content

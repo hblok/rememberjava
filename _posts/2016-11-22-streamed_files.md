@@ -33,6 +33,4 @@ Finally, here's an idea for an *assertFileEquals()* method. It takes two file na
 
 Finally, here's the full test file listing.
 
-{% highlight java %}
-{% include src/com/rememberjava/lambda/StreamFun.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/lambda/StreamFun.java' %}

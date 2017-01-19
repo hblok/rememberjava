@@ -15,9 +15,7 @@ Since Java 6, adding a system tray icon has been straight forward. The two main 
 
 Here's the full example class listing.
 
-{% highlight java %}
-{% include src/com/rememberjava/ui/TestTrayIcon.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/ui/TestTrayIcon.java' %}
 
 [ST]: https://docs.oracle.com/javase/8/docs/api/java/awt/SystemTray.html
 [TI]: https://docs.oracle.com/javase/8/docs/api/java/awt/TrayIcon.html

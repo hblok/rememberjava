@@ -46,9 +46,7 @@ Also worth mentioning, is the Google Guava implementation [EvictingQueue][EQ]. H
 
 Here's the full listing with all test methods.
 
-{% highlight java %}
-{% include src/com/rememberjava/apache/CircularFifoQueueTest.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/apache/CircularFifoQueueTest.java' %}
 
 [QUEUE]: https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
 [LBD]: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/LinkedBlockingDeque.html
