@@ -17,9 +17,7 @@ categories:
 {% endhighlight %}
 
 
-{% highlight java %}
-{% include src/com/rememberjava/.java %}
-{% endhighlight %}
+{% include javafile filename='src/com/rememberjava/.java' %}
 
 EOF
 

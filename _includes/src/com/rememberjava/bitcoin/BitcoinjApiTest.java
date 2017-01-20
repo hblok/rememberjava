@@ -192,8 +192,8 @@ public class BitcoinjApiTest {
     Coin sendValue = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
     // Coin sendValue = wallet.getBalance().minus(Transaction.DEFAULT_TX_FEE);
     
-    Address returnAdr = Address.fromBase58(params, TPFAUCET_RETURN_ADR);
-    SendRequest request = SendRequest.to(returnAdr, sendValue);
+    Address sendToAdr = Address.fromBase58(params, TPFAUCET_RETURN_ADR);
+    SendRequest request = SendRequest.to(sendToAdr, sendValue);
 
     SendResult result = wallet.sendCoins(request);
 
