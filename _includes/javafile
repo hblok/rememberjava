@@ -7,13 +7,16 @@ Usage:
 -->{% endraw %}{% endcomment %}
 
 <script>
-var hidden = true;
+var hidden = {};
 
 function fileshowhide(id) {
   var text = document.getElementById(id);
+
+  var h = (id in hidden) ? hidden[id] : true;
+  h = !h;
+  hidden[id] = h;
   
-  hidden = !hidden;
-  if(hidden) {
+  if(h) {
     text.style.display = "none";
   } else {
     text.style.display = "inline";
@@ -21,7 +24,7 @@ function fileshowhide(id) {
 }
 </script>
 
-{% assign id = page.id | replace:'/','' %}
+{% assign id = page.id | append: include.filename | replace:'/','' | replace:'%','' | replace:'.','' %}
 
 <div class="filebuttons">
 <div class="showhide"><button class="filebutton" onclick="fileshowhide('{{ id }}')">Show file</button></div>
