@@ -8,7 +8,7 @@ url: "http://rememberjava.com"
 github_username:  hblok
 
 # Build settings
-paginate: 5
+paginate: 8
 markdown: kramdown
 theme: minima
 gems:
