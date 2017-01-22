@@ -23,6 +23,7 @@ _site
 _includes/src/gradle
 _includes/src/gradlew
 _includes/src/.gradle
+_includes/src/build
 
 # Eclipse
 _includes/src/.settings
