@@ -1,8 +1,10 @@
-package com.rememberjava.midi.roland;
+package com.rememberjava.midi.roland.tr8;
 
 import java.util.Map;
 
 import javax.sound.midi.MidiMessage;
+
+import com.rememberjava.midi.roland.RolandMessage;
 
 public class Tr8Message extends RolandMessage {
 
@@ -10,7 +12,7 @@ public class Tr8Message extends RolandMessage {
    * With help from
    * http://cdm.link/2014/04/aira-secrets-get-midi-control-sequence-externally-download-free-ableton-m4l-patches
    */
-  private enum Tr8Controllers implements Controllers {
+  public enum Tr8Controllers implements Controllers {
     ACCENT(0x47),
     SHUFFLE(0x09),
 

@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import com.rememberjava.midi.ReceiverLimitedQueue;
+import com.rememberjava.midi.roland.tr8.Tr8Message;
 
 public class RolandTR8Test {
 

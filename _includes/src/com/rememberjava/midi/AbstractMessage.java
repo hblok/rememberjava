@@ -123,6 +123,14 @@ public abstract class AbstractMessage {
   public String getNoteOctave() {
     return getNote() + getOctave();
   }
+
+  public int getControlValue() {
+    if (!isControl() || data.length != 3) {
+      return -1;
+    }
+
+    return midiByteToInt(data[2]);
+  }
   
   public abstract String getControlName();
 }

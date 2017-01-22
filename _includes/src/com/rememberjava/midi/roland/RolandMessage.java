@@ -10,7 +10,7 @@ import com.rememberjava.midi.AbstractMessage;
 
 public abstract class RolandMessage extends AbstractMessage {
 
-  protected static interface Controllers {
+  public static interface Controllers {
     public int getId();
 
     public String name();
@@ -35,7 +35,7 @@ public abstract class RolandMessage extends AbstractMessage {
 
     int id = (data[1] & 0xFF);
     if (getIdMap().containsKey(id)) {
-      return getIdMap().get(id) + " " + id;
+      return getIdMap().get(id);
     }
 
     return String.format("Unknown controller (%d)", id);
