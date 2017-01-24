@@ -1,0 +1,40 @@
+<html>
+<body>
+
+<h2>Output:</h2>
+<div id="output">blank</div>
+
+<script>
+websocket = new WebSocket("ws://localhost:9999/websocket");
+
+websocket.onopen = function() { 
+  document.getElementById("output").innerHTML +=
+    "<p>onOpen() - OK - readyState=" + websocket.readyState + "</p>";
+};
+
+websocket.onmessage = function(e) {
+  console.log(e);
+ 	document.getElementById("output").innerHTML +=
+ 	  "<p style='color: blue;'> onMessage(): " + e.data + "</p>"; 
+};
+
+websocket.onerror = function(e) {
+  console.log(e); 
+ 	document.getElementById("output").innerHTML +=
+ 	  "<p style='color: red;'> + onError(): " + e + "</p>";
+};
+
+websocket.onclose = function(e) {
+  console.log(e); 
+ 	document.getElementById("output").innerHTML +=
+ 	  "<p style='color: red;'> + onClose(): " + e + "</p>";
+};
+
+
+console.log(websocket);
+
+websocket.send("test");
+</script>
+
+</body>
+</html>
