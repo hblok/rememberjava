@@ -6,6 +6,8 @@ file="_posts/${day}-${1}.md"
 
 cat > $file << EOF
 ---
+published: false
+
 layout: post
 title:  
 date:   ${time}
