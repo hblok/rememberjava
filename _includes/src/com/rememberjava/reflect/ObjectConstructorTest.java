@@ -83,6 +83,14 @@ public class ObjectConstructorTest {
     }
   }
 
+  Object construct(String type, String... args) throws Exception {
+    Class<?> klass = ClassNames.valueOf(type).getType();
+    Constructor<?>[] constructors = klass.getConstructors();
+    Class<?>[] types = constructors[0].getParameterTypes();
+    Object[] parameters = createParameters(types, args);
+    return constructors[0].newInstance(parameters);
+  }
+
   @SuppressWarnings("serial")
   Map<Class<?>, Function<String, ?>> classConstructorMap = new HashMap<Class<?>, Function<String, ?>>() {{
     put(String.class, String::new);
@@ -91,14 +99,6 @@ public class ObjectConstructorTest {
     put(Email.class, Email::new);
     put(Password.class, Password::hash);
   }};
-
-  Object construct(String type, String... args) throws Exception {
-    Class<?> klass = ClassNames.valueOf(type).getType();
-    Constructor<?>[] constructors = klass.getConstructors();
-    Class<?>[] types = constructors[0].getParameterTypes();
-    Object[] parameters = createParameters(types, args);
-    return constructors[0].newInstance(parameters);
-  }
 
   Object[] createParameters(Class<?>[] types, String[] args) {
     if (types.length != args.length) {
@@ -118,13 +118,31 @@ public class ObjectConstructorTest {
   }
 
   @Test
-  public void test() throws Exception {
+  public void testFoo() throws Exception {
     Foo foo = (Foo) construct("Foo", "ABC", "123", "3.14");
     assertEquals("ABC", foo.str);
     assertEquals(123, foo.i);
     assertEquals(3.14, foo.d, 2);
+  }
 
+  @Test
+  public void testAccount() throws Exception {
     Account account = (Account) construct("Account", "bob@example.com", "some password");
     assertEquals("V0PYfuPn4u9Gize+0DZ0nLgQQPk=", account.password.hash);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testUndefinedClass() throws Exception {
+    construct("NotFound");
+  }
+
+  @Test(expected = NumberFormatException.class)
+  public void testInvalidParameterType() throws Exception {
+    construct("Foo", "ABC", "ABC", "3.14");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidParameterCount() throws Exception {
+    construct("Foo", "ABC");
   }
 }
