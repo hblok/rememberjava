@@ -5,30 +5,18 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.Constructor;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 public class ObjectConstructorTest {
-
-  enum ClassNames {
-    Foo(Foo.class),
-    Account(Account.class);
-
-    private Class<?> type;
-
-    private ClassNames(Class<?> type) {
-      this.type = type;
-    }
-
-    Class<?> getType() {
-      return type;
-    }
-  }
 
   static class Foo {
     final String str;
@@ -83,22 +71,33 @@ public class ObjectConstructorTest {
     }
   }
 
+  List<Class<?>> validClasses = Arrays.asList(Foo.class, Account.class);
+
+  Map<String, Class<?>> classNameMap = validClasses.stream()
+      .collect(Collectors.toMap(c -> c.getSimpleName(), Function.identity()));
+
   Object construct(String type, String... args) throws Exception {
-    Class<?> klass = ClassNames.valueOf(type).getType();
+    if (!classNameMap.containsKey(type)) {
+      throw new IllegalArgumentException("Invalid class name: " + type);
+    }
+
+    Class<?> klass = classNameMap.get(type);
     Constructor<?>[] constructors = klass.getConstructors();
-    Class<?>[] types = constructors[0].getParameterTypes();
-    Object[] parameters = createParameters(types, args);
-    return constructors[0].newInstance(parameters);
+    Constructor<?> constructor = constructors[0];
+
+    Class<?>[] parameterTypes = constructor.getParameterTypes();
+    Object[] parameters = createParameters(parameterTypes, args);
+    return constructor.newInstance(parameters);
   }
 
   @SuppressWarnings("serial")
-  Map<Class<?>, Function<String, ?>> classConstructorMap = new HashMap<Class<?>, Function<String, ?>>() {{
+  Map<Class<?>, Function<String, ?>> classConstructorMap = new HashMap<Class<?>, Function<String, ?>>() { {
     put(String.class, String::new);
     put(Integer.TYPE, Integer::new);
     put(Double.class, Double::new);
     put(Email.class, Email::new);
     put(Password.class, Password::hash);
-  }};
+  } };
 
   Object[] createParameters(Class<?>[] types, String[] args) {
     if (types.length != args.length) {
