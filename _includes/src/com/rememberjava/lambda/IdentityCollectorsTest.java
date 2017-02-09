@@ -93,7 +93,9 @@ public class IdentityCollectorsTest {
   public void keytoIdentityTest() {
     List<Class<?>> classes = Arrays.asList(String.class, ArrayList.class);
     
-    Map<String, Class<?>> nameMap = classes.stream().collect(keytoIdentity(c -> c.getSimpleName()));
+    Map<String, Class<?>> nameMap = classes.stream()
+        .filter(c -> c.getName().contains("java.lang"))
+        .collect(keytoIdentity(c -> c.getSimpleName()));
     assertEquals(String.class, nameMap.get("String"));
 
     Map<String, Class<?>> nameMap2 = keytoIdentity(classes, c -> c.getSimpleName());
@@ -104,7 +106,9 @@ public class IdentityCollectorsTest {
   public void identityToValueTest() {
     List<String> files = Arrays.asList("index.html", "about.html");
 
-    Map<String, byte[]> fileCache = files.stream().collect(identityToValue(f -> loadFile(f)));
+    Map<String, byte[]> fileCache = files.stream()
+        .filter(f -> f.contains("index"))
+        .collect(identityToValue(f -> loadFile(f)));
     assertEquals("index.html", new String(fileCache.get("index.html")));
 
     Map<String, byte[]> fileCache2 = identityToValue(files, this::loadFile);
