@@ -1,9 +1,7 @@
 ---
-published: false
-
 layout: post
 title:  Identity Map Collector Helpers
-date:   2017-01-29 20:40:16 +0100
+date:   2017-02-09
 categories: lambda
 ---
 
