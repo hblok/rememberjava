@@ -3,6 +3,7 @@ layout: post
 title:  Method references kills the Factory class
 date:   2017-01-06 17:24:10 +0100
 categories: lambda
+tags: lambda factory
 ---
 
 When writing reusable code, we often want it to be as general and flexible as possible. So layers of abstractions are added; generic types; abstract class hierarchies; and let's not forget the [Factory pattern][FP]. Joel Spolsky had a famous rant about the [factory factory factory pattern][FFFP], and it can [get ugly][AF] in the real world as well.

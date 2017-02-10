@@ -3,6 +3,7 @@ layout: post
 title:  A failed attempt at a WebSocket server
 date:   2017-01-25 07:45:02 +0100
 categories: websocket
+tags: websocket
 ---
 
 Following the [post about the small HTTP server][http-post] using the the [*com.sun.net.httpserver*][sun-httpserver] API, I thought I'd try to make it work with WebSockets. I'll save the suspense; it wont work. And I'm not the first to have failed at it, but it's always more fun to [search for the solution afterwards][fail]..

@@ -6,11 +6,11 @@ permalink: /tags/
 
 <div class="tagIndex">
 
-{% capture tags %}{% for tag in site.categories %}{{tag[0]}}{{','}}{% endfor %}{% endcapture %}
+{% capture tags %}{% for tag in site.tags %}{{tag[0]}}{{','}}{% endfor %}{% endcapture %}
 {% assign sortedtags = tags | downcase | split:"," | sort %}
 
 {% for tag in sortedtags %}
-  {% for t in site.categories %}
+  {% for t in site.tags %}
     {% assign cmpt = t[0] | downcase %}
     {% if cmpt == tag %}
 

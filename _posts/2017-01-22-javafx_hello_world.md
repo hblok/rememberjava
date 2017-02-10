@@ -3,6 +3,7 @@ layout: post
 title:  Hello World with JavaFx
 date:   2017-01-22 15:07:26 +0100
 categories: javafx
+tags: javafx
 ---
 
 [JavaFx][JavaFx] is a comprehensive platform and set of APIs to develop desktop, web and even mobile applications. Although intended to replace the Swing GUI API, it can get significantly more complex, with [FXML for XML based object specification][fxml]; CSS styling; and special [IDE tool chains][efxclipse].

@@ -3,6 +3,7 @@ layout: post
 title:  Terminal and ncurses Java libraries
 date:   2017-01-22 12:40:29 +0100
 categories: cli
+tags: cli
 ---
 
 There's a few Java libraries for creating terminal and [ncurses][ncurses] like applications. They abstract away the [ANSI][ansi] escape [codes][terminalcodes] and low level control like [tput][tput]. I've briefly looked at three of them: [Lanterna][lanterna-gh], [Charva][charva] and [JCurses][JCurses]. They all come with basic terminal control, and some widgets and window managing to create terminal based GUI applications.

@@ -3,6 +3,7 @@ layout: post
 title: Fun with IO Streams
 date:   2016-11-21 07:12:08 -0700
 categories: lambda streams
+tags: lambda streams io
 ---
 
 With Java 8, file IO became a pleasure to work with. It was a drastic break from the old verbose syntax and awkward *((line = in.readLine()) != null)* and try/try/close idioms. With the new Stream based methods and lambda functions, the IO API becomes more similar to Python in ease of use.

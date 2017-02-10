@@ -3,6 +3,7 @@ layout: post
 title:  Word count
 date:   2016-11-26 22:22:37 +0100
 categories: lambda streams
+tags: lambda streams
 ---
 
 Here's another neat streams snippet, which in three lines handles what would take at least two loops in pre-Java 8 code. The task at hand is to count the number of occurrences of each unique word in a file. Given the content shown below, this Bash command line would solve it.

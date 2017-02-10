@@ -3,6 +3,7 @@ layout: post
 title:  MIDI basics
 date:   2017-01-13 19:58:04 +0100
 categories: midi
+tags: midi
 ---
 
 Working with MIDI in Java is easy. The standard API have classes covering MIDI file I/O, device I/O, sequencing and sound synthesis. [This comprhensive tutorial][midi-tut] covers most aspects. It also helps to know something about the MIDI format. [Juan Bello's slide deck][bello] is an excellent introduction. [midi.org][midi-org] is also a good source, including their full [message reference table][msgref].

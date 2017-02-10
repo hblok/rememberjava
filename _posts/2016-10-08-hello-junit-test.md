@@ -3,6 +3,7 @@ layout: post
 title:  "Hello Junit Test!"
 date:   2016-10-08 14:00:00 +0200
 categories: basics junit
+tags: junit basics
 ---
 
 Unit testing can sometimes be like washing the dishes: You know it should be done, that you'll have to do it eventually, but it can always be postponed. On the other hand, executing your code through unit tests is a great way to verify that it works as expected, in a short amount of time and with little code overhead. Furthermore, writing unit tests is a convenient way to execute any kind of code easily, especially from within a modern IDE, where it is typically easier to run a single test method than a full executable. Many of the examples on this site will use unit tests as the driver.

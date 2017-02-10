@@ -3,6 +3,7 @@ layout: post
 title:  Object construction through reflection
 date:   2017-01-27 14:51:12 +0100
 categories: 
+tags: reflection
 ---
 
 In the last post I ranted about [dependency injection framework magic][yesterday], but even custom magic can cause problems. When objects are constructed and invoked through reflection, the execution flow is no longer apparent in the code. Yet, it still has its place in certain applications, typically mapping external input to object instances, be it language parsing or lexing, or DB output to object mapping. But how to best balance between the abstract world of reflected classes and concrete type-safe code?

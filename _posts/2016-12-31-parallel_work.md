@@ -3,6 +3,7 @@ layout: post
 title:  Sequential vs. Parallel Streams
 date:   2016-12-31 08:13:32 +0100
 categories: lambda parallel
+tags: lambda parallel
 ---
 
 The [Java 8 Streams][STREAMS] API offers functional-style operations, and a simple way to execute such operations in parallel. To jump right into an example, the following two test methods show the difference between sequential and parallel execution of the the *println()* method over each of the elements of the stream.

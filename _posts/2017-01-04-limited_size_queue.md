@@ -3,6 +3,7 @@ layout: post
 title:  Limited size queue
 date:   2017-01-04 11:51:25 +0100
 categories: apache queue
+tags: apache queue
 ---
 
 The Java Collections [Queue][QUEUE] implementations will either grow without limit, or block if it grows beyond a given size, like the [LinkedBlockingDeque][LBD]. However, what if you need a non-blocking queue which drops its oldest elements? The Apache Commons [CircularFifoQueue][CFQ] covers that. The snippet below shows typical use, with a queue size of two, and where the first element of three is dropped.

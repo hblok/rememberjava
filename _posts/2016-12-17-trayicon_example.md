@@ -3,6 +3,7 @@ layout: post
 title:  TrayIcon Example
 date:   2016-12-17 15:30:54 +0100
 categories: UI trayicon
+tags: ui trayicon
 ---
 
 ![Tray Icon](/assets/trayicon.png)
