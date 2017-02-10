@@ -17,7 +17,8 @@ dl, dd, ol, ul {
 body {
   font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #111;
-  background-color: #fdfdfd;
+  /*  background-color: #fdfdfd;*/
+  background-color: whitesmoke;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
   -moz-font-feature-settings: "kern" 1;
@@ -106,7 +107,9 @@ code {
   font-size: 15px;
   border: 1px solid #e8e8e8;
   border-radius: 3px;
-  background-color: #f6f6ff; }
+  background-color: #dddde3;
+  /*background-color: #f6f6ff;*/
+}
 
 code {
   padding: 1px 5px; }
@@ -294,6 +297,29 @@ pre {
   .pagination-link, .pagination-link:visited, .pagination-link:hover {
     color: white;
   }
+}
+
+/**
+ * Tag index
+ */
+
+.tagIndex {
+  column-width: 25em;
+  column-gap: 3em;
+  column-rule: thin solid black;
+}
+
+.tagBox {
+  display: block;
+  box-sizing: border-box;
+
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+}
+
+.tagDate {
+  display: inline-block;
 }
 
 /**
