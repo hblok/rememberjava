@@ -323,6 +323,45 @@ pre {
 }
 
 /**
+ * Class index
+ */
+
+.classIndex {
+  column-width: 30em;
+  /*column-gap: 3em;
+  column-rule: thin solid black;*/
+}
+
+.classBox {
+  display: block;
+
+  border: thin dotted black;
+  margin: 4px;
+  padding-left: 5px;
+
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+}
+
+.classClass {
+  font-size: 20px;
+}
+
+.classClass .package {
+  font-size: 18px;
+  color: grey;
+}
+
+.classClass .name {
+  font-weight: bold;
+}
+
+.classPost .date {
+  display: inline-block;
+}
+
+/**
  * Home page colapse full Java files
  */
 
