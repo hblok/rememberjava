@@ -3,7 +3,7 @@ layout: post
 title:  A simple stupid calculator  
 date:   2016-12-12 20:03:03 +0100
 categories: calculator
-tags: calculator
+tags: calculator ui
 ---
 
 ![Calculator](/assets/rj_calc1.png)
