@@ -8,7 +8,7 @@ tags: websocket
 
 Following the [post about the small HTTP server][http-post] using the the [*com.sun.net.httpserver*][sun-httpserver] API, I thought I'd try to make it work with WebSockets. I'll save the suspense; it wont work. And I'm not the first to have failed at it, but it's always more fun to [search for the solution afterwards][fail]..
 
-The problem is that the httpserver package is not designed for the persistent bi-directional connection used by the [WebSocket prtocol][websocket]. The only part which will work is the handshake, which transmits a HTTP like request and response. However, as soon as that response is sent, the connection is closed, and thus the WebSocket object in the browser client will close.
+The problem is that the httpserver package is not designed for the persistent bi-directional connection used by the [WebSocket protocol][websocket]. The only part which will work is the handshake, which transmits a HTTP like request and response. However, as soon as that response is sent, the connection is closed, and thus the WebSocket object in the browser client will close.
 
 There is a [WebSocket API in Java EE][ee-api], however it will require an application server like Glassfish or Tomcat to run. Another option is the [SimpleFramework server][simpleframework], which also includes a WebSocket implementation. More about that in a later post.
 
