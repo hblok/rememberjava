@@ -10,8 +10,9 @@ published: false
 
 layout: post
 title:  
-date:   ${time}
+date:   ${day}
 categories: 
+tags: 
 ---
 
 {% highlight java %}

@@ -3,7 +3,7 @@ layout: post
 title:  WebSocket Chat example with the SimpleFramework API
 date:   2017-01-26
 categories: websocket
-tags: websocket
+tags: websocket server
 ---
 
 As mentioned in the [previous post][fail], the [SimpleFramework API and server][simpleframework] is a minimal alternative in the world of Java application servers like Glassfish, Tomcat. [Hosted on GitHub][sf-gh] under an Apache v2.0 license, they offer an embeddable HTTP, Servlet and WebSocket capable stack and API. They claim their performance is better than other Java based web servers.

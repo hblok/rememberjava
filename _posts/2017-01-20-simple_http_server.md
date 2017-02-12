@@ -3,7 +3,7 @@ layout: post
 title:  A simple HTTP server
 date:   2017-01-20 05:50:47 +0100
 categories: http
-tags: http
+tags: http server
 ---
 
 The unofficial *com.sun* packages which is still part of the main JDK, include a few [convenience classes for running a HTTP server][httpserver-pkg]. However, since these are not part of the official API, there's typically a warning in the IDEs not to use them. The annotation *@SuppressWarnings("restriction")* can also be used to ignore this warning. Besides that, they will work fine.

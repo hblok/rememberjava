@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.nio.file.Files;
 
-import com.google.common.io.Files;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -33,7 +33,7 @@ public class StaticFileHandler implements HttpHandler {
 
     if (path.exists()) {
       ex.sendResponseHeaders(200, path.length());
-      Files.copy(path, out);
+      out.write(Files.readAllBytes(path.toPath()));
     } else {
       System.err.println("File not found: " + path.getAbsolutePath());
 
