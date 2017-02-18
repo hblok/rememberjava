@@ -27,7 +27,8 @@ As for the handler, it listens to requests where the path of the URI starts with
 Finally, to test the running server, here's two unit tests. The first downloads a file which exists, and prints its lines. The second requests a file which does not exist. Notice that the 404 return code passed from *sendResponseHeaders()* in the handler, is enough to make the *openStream()* call throw a *FileNotFoundException* on the client side.
 
 {% highlight java %}
-{% include includemethod filename='src/com/rememberjava/http/SimpleHttpServerTest.java' method='testDownload' before=1  after=0 %}{% include includemethod filename='src/com/rememberjava/http/SimpleHttpServerTest.java' method='testFilenNotFound' before=1  after=0 %}
+{% include includemethod filename='src/com/rememberjava/http/SimpleHttpServerTest.java' method='testDownload' before=1  after=0 %}
+{% include includemethod filename='src/com/rememberjava/http/SimpleHttpServerTest.java' method='testFilenNotFound' before=1  after=0 %}
 {% endhighlight %}
 
 Here's the main class:

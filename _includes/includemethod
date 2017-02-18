@@ -17,8 +17,7 @@ Example:
 
   {% include includemethod filename='src/HelloWorld.java' method='test()' before=2 after=1 %}
   
--->{% endraw %}{% endcomment %}
-{% capture unused %}
+-->{% endraw %}{% endcomment %}{% capture unused %}
 
 {% capture filecontent %}
     {% include {{include.filename}} %}
@@ -58,5 +57,4 @@ Example:
    {% assign count = count | plus: include.after %}
 {% endif %}
 
-{% endcapture %}{% assign unused = nil %}
-{% for line in lines offset:start limit:count %}{{ line }}{% endfor %}
+{% endcapture %}{% assign unused = nil %}{% for line in lines offset:start limit:count %}{{ line }}{% endfor %}

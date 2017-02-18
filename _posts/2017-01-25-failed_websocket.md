@@ -15,7 +15,8 @@ There is a [WebSocket API in Java EE][ee-api], however it will require an applic
 The only part of the code worth mentioning here is the handshake response from the server. It sets the correct headers and encodes the server accept key according to the specification. Connecting to this server will therefore result in a valid websocket object on the client, as long as *handle()* method on the server does not return.
 
 {% highlight java %}
-{% include includemethod filename='src/com/rememberjava/http/CrippledWebSocketHandler.java' method='void handle' before=0  after=0 %}{% include includemethod filename='src/com/rememberjava/http/CrippledWebSocketHandler.java' method='String getServerResponseKey' before=0  after=0 %}
+{% include includemethod filename='src/com/rememberjava/http/CrippledWebSocketHandler.java' method='void handle' before=0  after=0 %}
+{% include includemethod filename='src/com/rememberjava/http/CrippledWebSocketHandler.java' method='String getServerResponseKey' before=0  after=0 %}
 {% endhighlight %}
 
 [http-post]: /http/2017/01/20/simple_http_server.html

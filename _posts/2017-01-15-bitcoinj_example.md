@@ -21,7 +21,8 @@ The nice thing about the test block chain is that it is a real public live block
 To get some free test coins, run the following code, wait for the prompt which shows the next receiving address, and head over to [faucet.xeno-genesis.com][fxg] to ask them to send some money there. It should show up as received within a few seconds. Your wallet now contains some coins.
 
 {% highlight java %}
-{% include includemethod filename='src/com/rememberjava/bitcoin/BitcoinjApiTest.java' method='testReceive()' before=0  after=0 %}{% include includemethod filename='src/com/rememberjava/bitcoin/BitcoinjApiTest.java' method='void coinsReceived' before=0  after=0 %}
+{% include includemethod filename='src/com/rememberjava/bitcoin/BitcoinjApiTest.java' method='testReceive()' before=0  after=0 %}
+{% include includemethod filename='src/com/rememberjava/bitcoin/BitcoinjApiTest.java' method='void coinsReceived' before=0  after=0 %}
 {% endhighlight %}
 
 Since the test network is a real network with real miners, it's good etiquette to return your test coins to the pool for others to use once you're done with them. The following code takes care of that, returning them to the TP Faucet default return address *"n2eMqTT929pb1RDNuqEnxdaLau1rxy3efi"*. You can return all your coins, or just a fraction if you want to experiment more. This will also wait a few seconds for the callback confirmation.
