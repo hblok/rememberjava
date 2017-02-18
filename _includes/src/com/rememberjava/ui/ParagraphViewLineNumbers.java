@@ -20,9 +20,10 @@ import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
 /**
- * Example left margin line number for a JEditorPane. Using a custom EditorKit
- * and ViewFactory to pass in ParagraphView which paints a child element. Pads
- * the line numbers up to 999, and handles wrapped line in the editor.
+ * Example use of a left margin line number for a JEditorPane. Using a custom
+ * EditorKit and ViewFactory to pass in ParagraphView which paints a child
+ * element. Pads the line numbers up to 999, and handles wrapped lines in the
+ * editor.
  */
 public class ParagraphViewLineNumbers extends JFrame {
 
@@ -96,7 +97,7 @@ public class ParagraphViewLineNumbers extends JFrame {
    */
   class CustomParagraphView extends ParagraphView {
 
-    public short MARGIN_WIDTH_PX = 25;
+    public final short MARGIN_WIDTH_PX = 25;
 
     private Element thisElement;
 
@@ -139,7 +140,7 @@ public class ParagraphViewLineNumbers extends JFrame {
     private int getLineNumber() {
       // According to the Document.getRootElements() doc, there will "typically"
       // only be one root element.
-      Element root = getDocument().getRootElements()[0];
+      Element root = getDocument().getDefaultRootElement();
       int len = root.getElementCount();
       for (int i = 0; i < len; i++) {
         if (root.getElement(i) == thisElement) {
