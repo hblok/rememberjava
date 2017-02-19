@@ -381,6 +381,13 @@ pre {
   display: none;
 }
 
+.filename {
+  font-stretch: extra-expanded;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
 .filebutton {
   background-color: #2a7ae2;
   color: white;

@@ -26,6 +26,9 @@ function fileshowhide(id) {
 
 {% assign id = page.id | append: include.filename | replace:'/','' | replace:'%','' | replace:'.','' %}
 
+{% assign split = include.filename | split:'/' %}
+
+<div class="filename">{{split | last}}</div>
 <div class="filebuttons">
 <div class="showhide"><button class="filebutton" onclick="fileshowhide('{{ id }}')">Show file</button></div>
 <a class="filebutton github" href="https://github.com/hblok/rememberjava/blob/master/_includes/{{ include.filename }}">GitHub</a>
