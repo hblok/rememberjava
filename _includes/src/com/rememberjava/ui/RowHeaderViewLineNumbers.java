@@ -15,9 +15,9 @@ import java.nio.file.Paths;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -75,7 +75,7 @@ public class RowHeaderViewLineNumbers extends JFrame {
    * Left hand side RowHeaderView for a JEditorPane in a JScrollPane. Highlights
    * the currently selected line. Handles line wrapping, frame resizing.
    */
-  class LineNumbersView extends JPanel implements DocumentListener, CaretListener, ComponentListener {
+  class LineNumbersView extends JComponent implements DocumentListener, CaretListener, ComponentListener {
 
     private static final long serialVersionUID = 1L;
 
