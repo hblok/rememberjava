@@ -475,7 +475,8 @@ pre {
  * Syntax highlighting styles
  */
 .highlight {
-  background: #fff; }
+  background: #fff;
+  max-width: 70em;  }
   .highlighter-rouge .highlight {
     background: #f6f6ff; }
   .highlight .c {
