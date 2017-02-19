@@ -38,7 +38,27 @@ Then, your source code directory structure might not match the default Gradle "m
 Gradle integrates OK with Eclipse, but be careful with the "refresh" option. It tends to insist on changing the classpath setting of the project, so the packages disappear. It's a good idea to keep the *.classpath* setting file under version control.
 
 {% highlight shell %}
-{% include src/build.gradle %}
+apply plugin: 'java'
+
+sourceSets {
+  main {
+    java {
+      srcDirs = ['src']
+    }
+  }
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'org.slf4j:slf4j-api:1.7.21'
+  compile 'org.slf4j:slf4j-simple:1.7.21'
+  compile 'org.bitcoinj:bitcoinj-core:0.14.3'
+
+  testCompile 'junit:junit:4.12'
+}
 {% endhighlight %}
 
 The following listing shows all the tests. It demonstrates similar functionality as seen in the [ForwardingService][fs-tut] class in the main [bitcoinj getting started guide][bitcoinj-start]. Hopefully, the code is a bit easier to read and run this way.
