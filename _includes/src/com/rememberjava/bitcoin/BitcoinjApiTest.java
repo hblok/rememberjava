@@ -1,3 +1,4 @@
+/* Copyright rememberjava.com. Licensed under GPL 3. See http://rememberjava.com/license */
 package com.rememberjava.bitcoin;
 
 import java.io.File;

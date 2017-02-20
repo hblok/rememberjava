@@ -1,3 +1,4 @@
+/* Copyright rememberjava.com. Licensed under GPL 3. See http://rememberjava.com/license */
 package com.rememberjava.midi.roland;
 
 import static com.rememberjava.midi.MidiUtils.MIDI_IN_DEVICE;
