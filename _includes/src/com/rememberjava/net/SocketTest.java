@@ -23,8 +23,16 @@ public class SocketTest {
   private OutputStream serverOut;
   private InputStream serverIn;
 
+  /**
+   * Shared lock between the "client" and "server" code, to make the test case
+   * synchronous.
+   */
   private Semaphore lock = new Semaphore(0);
 
+  /**
+   * Tests server and client side sockets in one flow. A lock object is used for
+   * synchronous between the two sides.
+   */
   @Test
   public void testClientServer() throws IOException, InterruptedException {
     ServerSocket server = new ServerSocket(PORT);
@@ -47,21 +55,33 @@ public class SocketTest {
     printWrite(clientOut, "Test printWrite");
     assertRead(serverIn, "Test printWrite");
 
+    printWrite(serverOut, "Test printWrite again");
+    assertRead(clientIn, "Test printWrite again");
+
     client.close();
     server.close();
   }
 
+  /**
+   * Writes to an OutputStream. Used for both server and client output streams.
+   */
   private void write(OutputStream out, String str) throws IOException {
     out.write(str.getBytes());
     out.flush();
   }
 
+  /**
+   * Writes to an OutputStream. Used for both server and client output streams.
+   */
   private void printWrite(OutputStream out, String str) throws IOException {
     PrintWriter pw = new PrintWriter(out);
     pw.print(str);
     pw.flush();
   }
 
+  /**
+   * Reads from an InputStream. Used for both server and client input streams.
+   */
   private void assertRead(InputStream in, String expected) throws IOException {
     assertEquals("Too few bytes available for reading: ", expected.length(), in.available());
 
@@ -70,6 +90,11 @@ public class SocketTest {
     assertEquals(expected, new String(buf));
   }
 
+  /**
+   * Listens for and accepts one incoming request server side on a separate
+   * thread. When a request is received, grabs its IO streams and "signals" to
+   * the client side above through the shared lock object.
+   */
   private void listen(ServerSocket server) {
     new Thread(() -> {
       try {
