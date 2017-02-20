@@ -3,7 +3,7 @@ layout: post
 title:  Line numbers for JEditorPane and JTextPane
 date:   2017-02-19
 categories: ui
-tags: ui
+tags: ui swing
 ---
 
 There are many ways to add line numbers to the [*JEditorPane*][JEditorPane] and [*JTextPane*][JTextPane] Swing components. This post looks at two solutions: One providing a custom [*ParagraphView*][ParagraphView] which paints a child element that contains the line number for that paragraph. The other implements a separate component which is passed as the RowHeaderView of the [*JScrollPane*][JScrollPane]. Both support scrolling and line wrapping, and in this example the latter includes current line highlighting, as seen in the image below.
