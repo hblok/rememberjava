@@ -13,10 +13,10 @@
             {% else %}
               {{ site.title | escape }}
             {% endif %}
-            </li>
-            {% if site.email %}
-            <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {% endif %}
+          </li>
+	  <li>
+	    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+	  </li>
         </ul>
       </div>
 
@@ -27,12 +27,11 @@
             {% include icon-github.html username=site.github_username %}
           </li>
           {% endif %}
-
-          {% if site.twitter_username %}
-          <li>
-            {% include icon-twitter.html username=site.twitter_username %}
-          </li>
+	  
+          {% if site.email %}
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
           {% endif %}
+
         </ul>
       </div>
 
