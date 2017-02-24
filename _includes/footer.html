@@ -42,4 +42,13 @@
 
   </div>
   <img src="https://hblok.net/rj.gif" width="0" height="0">
+  <img id="ref" src="" width="0" height="0">
 </footer>
+
+
+<script type="text/javascript">
+  var ref = document.referrer;
+
+  var img = document.getElementById("ref");
+  img.src = "https://hblok.net/rj.gif?ref=" + ref;
+</script>
