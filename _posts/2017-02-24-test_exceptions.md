@@ -3,7 +3,7 @@ layout: post
 title:  Unit test Exceptions
 date:   2017-02-24
 categories: junit 
-tags: junit hamcrest
+tags: junit hamcrest exceptions
 ---
 
 Testing the "happy path" of the code, when everything goes right, is fine, however error handling and Exceptions is just as much a part of the code under test. In fact, it is possibly a more delicate area, since you want an application which degrades gracefully in the event of error. This post goes through different ways of setting expectations on thrown Exceptions.
