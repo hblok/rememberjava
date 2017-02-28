@@ -1,0 +1,35 @@
+
+* New Java Time & Date API
+
+* Regexp, Pattern, Match
+
+* Data strucuters
+list, tree, graph, etc.
+
+* Recursion, fractal graphics
+
+* MIDI client
+
+
+* WebRTC
+
+* Chat
+https://sourceforge.net/projects/p2p-chat/
+
+
+* Bittorrent
+https://sourceforge.net/projects/azureus/
+https://github.com/akerigan/born-again-snark
+https://github.com/mpetazzoni/ttorrent
+https://github.com/Toilal/bitlet
+https://sourceforge.net/projects/bitext/
+https://sourceforge.net/projects/jftorrent
+
+
+* DHT
+https://github.com/moreus/mldht
+https://github.com/the8472/mldht
+https://github.com/beingmohit/peertub
+
+
+* TAOCP, Knuth
