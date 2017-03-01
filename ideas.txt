@@ -8,6 +8,11 @@
 * Data strucuters
 list, tree, graph, etc.
 
+* EventBus
+https://github.com/google/guava/wiki/EventBusExplained
+https://google.github.io/guava/releases/21.0/api/docs/com/google/common/eventbus/EventBus.html
+
+
 * Recursion, fractal graphics
 
 * MIDI client
@@ -29,14 +34,8 @@ https://sourceforge.net/projects/jftorrent
 
 https://wiki.theory.org/BitTorrentSpecification
 
-* DHT
-https://github.com/moreus/mldht
-https://github.com/the8472/mldht
- DEP https://github.com/the8472/ed25519-java
-  (dep: https://github.com/str4d/ed25519-java
-   compile 'net.i2p.crypto:eddsa:0.1.0'
-
 https://github.com/beingmohit/peertub
+
 
 * NN / machine learning
 - ..
