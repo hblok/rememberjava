@@ -3,7 +3,7 @@ layout: post
 title:  Send and Receive money with bitcoinj
 date:   2017-01-15 12:37:40 +0100
 categories: bitcoin
-tags: bitcoin gradle
+tags: bitcoin p2p gradle
 ---
 
 The [bitcoinj][bitcoinj] library is easy to use for Bitcoin wallet and transaction functions for both native Java and Android applications. Although there are certain features missing, it seems mature enough to be included in a Bitcoin walled app or service.
