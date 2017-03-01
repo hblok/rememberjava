@@ -10,8 +10,6 @@ import java.net.Socket;
 
 import org.junit.Test;
 
-// https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
-// https://docs.oracle.com/javase/tutorial/essential/exceptions/runtime.html
 public class TryCatchTest {
 
   // The second try-block will throw an uncaught ArithmeticException because of
@@ -19,8 +17,8 @@ public class TryCatchTest {
   @Test(expected = ArithmeticException.class)
   public void basic() {
     try {
-      String a = null;
-      a.toString();
+      String str = null;
+      str.toString();
     } catch (NullPointerException e) {
       e.printStackTrace();
     }
@@ -39,9 +37,9 @@ public class TryCatchTest {
       Integer a = null;
       int b = 1 / a;
     } catch (NullPointerException e) {
-      e.printStackTrace();
+      System.out.println("NullPointerException");
     } catch (ArithmeticException e) {
-      e.printStackTrace();
+      System.out.println("ArithmeticException");
     }
 
     try {
@@ -71,21 +69,22 @@ public class TryCatchTest {
     }
   }
 
-  // The HTTP connection will not succeed; force it time out quickly. The test
-  // will thus fail.
-  @Test(timeout = 1)
+  @Test
   public void tryWith() {
     try (OutputStream out = new FileOutputStream("/dev/null")) {
       out.write(0);
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
 
+  @Test
+  public void tryWithMulti() {
     try (Socket s = new Socket("google.com", 80);
-        OutputStream out = s.getOutputStream();
-        InputStream in = s.getInputStream()) {
-      in.read();
+         OutputStream out = s.getOutputStream();
+         InputStream in = s.getInputStream()) {
       out.write(0);
+      in.read();
     } catch (IOException e) {
       e.printStackTrace();
     }
