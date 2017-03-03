@@ -15,6 +15,11 @@ https://google.github.io/guava/releases/21.0/api/docs/com/google/common/eventbus
 
 * Recursion, fractal graphics
 
+* LWJGL - Lightweight Java Game Library
+  Vulkan
+  https://www.lwjgl.org/
+  
+ 
 * MIDI client
 
 
