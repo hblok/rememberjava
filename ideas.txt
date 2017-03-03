@@ -1,6 +1,11 @@
 
 * New Java Time & Date API
 
+* SQLite
+  https://www.tutorialspoint.com/sqlite/sqlite_java.htm
+  http://stackoverflow.com/a/41241
+  https://bitbucket.org/xerial/sqlite-jdbc
+
 * Regexp, Pattern, Match
 
 * Java doc parsing
