@@ -25,7 +25,16 @@ https://google.github.io/guava/releases/21.0/api/docs/com/google/common/eventbus
 * LWJGL - Lightweight Java Game Library
   Vulkan
   https://www.lwjgl.org/
-  
+
+* Java 9
+  - HTTP/2 Client
+    http://openjdk.java.net/jeps/110
+  - Modular
+    http://openjdk.java.net/jeps/200
+  - Simplified Doclet API
+    http://openjdk.java.net/jeps/221
+  - jshell
+    http://openjdk.java.net/jeps/222
  
 * MIDI client
 
