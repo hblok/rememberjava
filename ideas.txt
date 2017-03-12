@@ -21,6 +21,8 @@ https://google.github.io/guava/releases/21.0/api/docs/com/google/common/eventbus
 
 
 * Recursion, fractal graphics
+  http://www.michaelbach.de/ot/index.html
+  http://www.ritsumei.ac.jp/~akitaoka/index-e.html
 
 * LWJGL - Lightweight Java Game Library
   Vulkan
