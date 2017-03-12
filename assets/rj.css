@@ -305,9 +305,12 @@ pre {
 
 .tagIndex {
   column-width: 25em;
-  -moz-column-width: 25em;
   column-gap: 3em;
   column-rule: thin solid black;
+
+  -moz-column-width: 25em;
+  -moz-column-gap: 3em;
+  -moz-column-rule: thin solid black;
 }
 
 .tagBox {
