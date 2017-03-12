@@ -58,6 +58,10 @@ https://wiki.theory.org/BitTorrentSpecification
 https://github.com/beingmohit/peertub
 
 
+* Calc
+  http://www.singularsys.com/jep/doc/html/index.html
+
+
 * NN / machine learning
 - ..
 
