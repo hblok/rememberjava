@@ -1,13 +1,27 @@
 package com.rememberjava.graphics;
 
 import static java.lang.Math.cos;
+import static java.lang.Math.log;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static java.lang.Math.sin;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 /**
  * Draws recursive spinning circles with colors.
@@ -15,28 +29,125 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 class CantorColors extends JFrame {
 
-  private final Color[] COLORS = decodeColors(
-      "#000fff,#18A3AC,#F48024,#178CCB,#052049,#FBAF3F,#000fff"
-  // "#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB"
-  );
+  private Canvas canvas;
 
-  private final int size;
+  private JPanel controls;
+
+  private JPanel colorOut;
+
+  private String colorsList = "#000fff,#18A3AC,#F48024,#178CCB,#052049,#FBAF3F,#000fff";
+
+  private Color[] colors;
+  // "#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB"
+
+  // #722059,#A92268,#E02477,#DB7580,#D6C689,#722059,#A92268,#E02477
+  // #F28E98,#FF9985,#E1CBA6,#DFCFB8,#E7E4D3,#F28E98,#FF9985,#E1CBA6
 
   private double angle;
+  private double angleStepSize;
+
+  private int sleepMs;
+
+  private float transparency;
+
+  private int recursions;
 
   public static void main(String args[]) {
-    new CantorColors(800);
+    CantorColors cc = new CantorColors();
+    cc.initUi();
+    cc.start();
   }
 
-  CantorColors(int size) {
-    this.size = size;
+  private void initUi() {
+    setLayout(new BorderLayout());
+
+    canvas = new Canvas();
+    getContentPane().add(canvas, BorderLayout.CENTER);
+
+    controls = new JPanel();
+    controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
+    getContentPane().add(controls, BorderLayout.NORTH);
+
+    JSlider stepSize = addSlider("Rotation step size", 1, 100, 5);
+    stepSize.addChangeListener(e -> {
+      angleStepSize = log(stepSize.getValue());
+    });
+
+    JSlider delayMs = addSlider("Frame delay", 0, 100, 0);
+    delayMs.addChangeListener(e -> {
+      sleepMs = delayMs.getValue();
+    });
+
+    JSlider rec = addSlider("Recursions", 1, 20, 7);
+    rec.addChangeListener(e -> {
+      recursions = rec.getValue();
+    });
+
+    JSlider trans = addSlider("Transparency", 1, 1000, 1000);
+    trans.addChangeListener(e -> {
+      transparency = (float) trans.getValue();
+      colors = decodeColors(colorsList);
+      showColors();
+    });
+
+    JTextField colorIn = new JTextField(colorsList);
+    colorIn.addKeyListener(new KeyAdapter() {
+      public void keyTyped(KeyEvent e) {
+        colorsList = colorIn.getText();
+        colors = decodeColors(colorsList);
+        showColors();
+      }
+    });
+    controls.add(colorIn);
+
+    colorOut = new JPanel();
+    colorOut.setLayout(new BoxLayout(colorOut, BoxLayout.X_AXIS));
+    colors = decodeColors(colorsList);
+    showColors();
+    controls.add(colorOut);
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(size, size);
+    setSize(600, 600);
     setVisible(true);
+  }
 
-    createBufferStrategy(3);
-    BufferStrategy strategy = getBufferStrategy();
+  private JSlider addSlider(String text, int min, int max, int value) {
+    Box box = Box.createHorizontalBox();
+    controls.add(box);
+
+    JLabel label = new JLabel(text);
+    label.setPreferredSize(new Dimension(150, (int) label.getPreferredSize().getHeight()));
+    box.add(label);
+
+    JSlider slider = new JSlider(min, max, value);
+    box.add(slider);
+
+    return slider;
+  }
+
+  private void showColors() {
+    colorOut.removeAll();
+    colorOut.setBackground(Color.WHITE);
+    for (Color c : colors) {
+      JPanel l = new JPanel();
+      l.setPreferredSize(
+          new Dimension(getWidth() / colors.length, (int) l.getPreferredSize().getHeight()));
+      l.setBackground(c);
+      colorOut.add(l);
+    }
+    colorOut.revalidate();
+    colorOut.repaint();
+  }
+
+  private void start() {
+    transparency = 1000f;
+    angleStepSize = 0.005;
+    recursions = 7;
+    colors = decodeColors(colorsList);
+    showColors();
+
+    canvas.createBufferStrategy(3);
+    BufferStrategy strategy = canvas.getBufferStrategy();
 
     new Thread(() -> {
       while (true) {
@@ -45,7 +156,7 @@ class CantorColors extends JFrame {
         g.dispose();
         strategy.show();
 
-        // sleep(20);
+        sleep(sleepMs);
       }
     }).start();
   }
@@ -53,7 +164,8 @@ class CantorColors extends JFrame {
   /**
    * Given a string of comma separated hex encoded RGB values, creates the
    * individual Color objects. All spaces are removed and ignored; the hex
-   * values can be prefixed by a hash (#) or not.
+   * values can be prefixed by a hash (#) or not. Adds the alpha transparency
+   * setting from the UI.
    */
   private Color[] decodeColors(String hexColors) {
     String[] split = hexColors.replaceAll(" +", "").split(",");
@@ -62,7 +174,8 @@ class CantorColors extends JFrame {
     for (int i = 0; i < split.length; i++) {
       String str = (split[i].startsWith("#") ? "" : "#") + split[i];
       float[] comp = Color.decode(str).getRGBComponents(null);
-      result[i] = new Color(comp[0], comp[1], comp[2], i / 1000f);
+      float a = max(0, min(1f, ((float) i) / transparency));
+      result[i] = new Color(comp[0], comp[1], comp[2], a);
     }
 
     return result;
@@ -75,14 +188,9 @@ class CantorColors extends JFrame {
   }
 
   private void render(Graphics g) {
-    drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, 7, g);
-    angle += 0.005;
-  }
-
-  private void clear(Graphics g) {
-    g.setColor(Color.white);
-    g.fillRect(0, 0, getWidth(), getHeight());
-    g.setColor(Color.black);
+    int size = min(canvas.getWidth(), canvas.getHeight());
+    drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, recursions, g);
+    angle += angleStepSize;
   }
 
   private void drawCantor(int x, int y, int r, double a, int times, Graphics g) {
@@ -90,7 +198,8 @@ class CantorColors extends JFrame {
       return;
     }
 
-    g.setColor(COLORS[times - 1]);
+    g.setColor(colors[times % colors.length]);
+    // g.setColor(colors[times - 1]);
     drawMidCircle(x, y, r, g);
 
     int x1 = (int) (r / 2 * cos(a));
