@@ -1,19 +1,11 @@
 package com.rememberjava.graphics;
 
-import static java.awt.Color.BLUE;
-import static java.awt.Color.CYAN;
-import static java.awt.Color.GREEN;
-import static java.awt.Color.MAGENTA;
-import static java.awt.Color.ORANGE;
-import static java.awt.Color.RED;
-import static java.awt.Color.YELLOW;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -23,17 +15,11 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 class CantorColors extends JFrame {
 
-  // private final Color[] COLORS = new Color[] { BLUE, RED, YELLOW, GREEN,
-  // MAGENTA, ORANGE, CYAN, };
-  private final Color[] COLORS = decodeColors("fff", 
-      "18A3AC", 
-      "F48024", 
-      "178CCB", 
-      "052049", 
-      "FBAF3F", 
-      "fff");
-  //#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB
-  
+  private final Color[] COLORS = decodeColors(
+      "#000fff,#18A3AC,#F48024,#178CCB,#052049,#FBAF3F,#000fff"
+  // "#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB"
+  );
+
   private final int size;
 
   private double angle;
@@ -59,29 +45,38 @@ class CantorColors extends JFrame {
         g.dispose();
         strategy.show();
 
-        sleep(20);
+        // sleep(20);
       }
     }).start();
   }
 
-  private Color[] decodeColors(String... hexColors) {
-    return Arrays.asList(hexColors).stream().map(str -> {
-      return Color.decode("#" + str);
-    }).toArray(Color[]::new);
+  /**
+   * Given a string of comma separated hex encoded RGB values, creates the
+   * individual Color objects. All spaces are removed and ignored; the hex
+   * values can be prefixed by a hash (#) or not.
+   */
+  private Color[] decodeColors(String hexColors) {
+    String[] split = hexColors.replaceAll(" +", "").split(",");
+    Color[] result = new Color[split.length];
+
+    for (int i = 0; i < split.length; i++) {
+      String str = (split[i].startsWith("#") ? "" : "#") + split[i];
+      float[] comp = Color.decode(str).getRGBComponents(null);
+      result[i] = new Color(comp[0], comp[1], comp[2], i / 1000f);
+    }
+
+    return result;
   }
 
   private void sleep(long ms) {
     try {
       Thread.sleep(ms);
-    } catch (InterruptedException e) {
-    }
+    } catch (InterruptedException e) {}
   }
 
   private void render(Graphics g) {
-    // clear(g);
-
     drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, 7, g);
-    angle += 0.01;
+    angle += 0.005;
   }
 
   private void clear(Graphics g) {
