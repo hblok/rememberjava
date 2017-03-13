@@ -21,25 +21,26 @@ class Cantor extends JFrame {
     setVisible(true);
   }
 
+  @Override
   public void paint(Graphics g) {
     g.setColor(Color.white);
     g.fillRect(0, 0, getWidth(), getHeight());
     g.setColor(Color.black);
 
-    drawCantor(450, 450, 400, Math.PI / 2., 7, g);
+    drawCantor(450, 450, 400, 7, g);
   }
 
-  void drawCantor(int x, int y, int r, double a, int times, Graphics g) {
-    System.out.printf("x=%d, y=%d, r=%d, times=%d\n", x, y, r, times);
+  private void drawCantor(int x, int y, int radius, int times, Graphics g) {
+    System.out.printf("x=%d, y=%d, r=%d, times=%d\n", x, y, radius, times);
 
     if (times > 0) {
-      drawMidCircle(x, y, r, g);
-      drawCantor(x + r / 2, y, r / 2, 0, times - 1, g);
-      drawCantor(x - r / 2, y, r / 2, 0, times - 1, g);
+      drawMidCircle(x, y, radius, g);
+      drawCantor(x + radius / 2, y, radius / 2, times - 1, g);
+      drawCantor(x - radius / 2, y, radius / 2, times - 1, g);
     }
   }
 
-  void drawMidCircle(int x, int y, int r, Graphics g) {
-    g.drawOval(x - r, y - r, 2 * r, 2 * r);
+  private  void drawMidCircle(int x, int y, int radius, Graphics g) {
+    g.drawOval(x - radius, y - radius, 2 * radius, 2 * radius);
   }
 }
