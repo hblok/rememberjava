@@ -1,7 +1,6 @@
 package com.rememberjava.graphics;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -49,7 +48,7 @@ class CantorSpin extends JFrame {
   private void render(Graphics g) {
     clear(g);
 
-    drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, 7, g);
+    drawCircles(size / 2, size / 2, (int) (size * 0.4), angle, 7, g);
     angle += 0.01;
   }
 
@@ -59,7 +58,7 @@ class CantorSpin extends JFrame {
     g.setColor(Color.black);
   }
 
-  private void drawCantor(int x, int y, int r, double a, int times, Graphics g) {
+  private void drawCircles(int x, int y, int r, double a, int times, Graphics g) {
     if (times <= 0) {
       return;
     }
@@ -68,8 +67,8 @@ class CantorSpin extends JFrame {
 
     int x1 = (int) (r / 2 * cos(a));
     int y1 = (int) (r / 2 * sin(a));
-    drawCantor(x + x1, y + y1, r / 2, -a, times - 1, g);
-    drawCantor(x - x1, y - y1, r / 2, -a, times - 1, g);
+    drawCircles(x + x1, y + y1, r / 2, -a, times - 1, g);
+    drawCircles(x - x1, y - y1, r / 2, -a, times - 1, g);
   }
 
   private void drawMidCircle(int x, int y, int r, Graphics g) {

@@ -1,10 +1,6 @@
 package com.rememberjava.graphics;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.log;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -15,13 +11,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 /**
  * Draws recursive spinning circles with colors.
@@ -45,12 +42,17 @@ class CantorColors extends JFrame {
 
   private double angle;
   private double angleStepSize;
+  private double alternateSign;
 
   private int sleepMs;
 
   private float transparency;
 
   private int recursions;
+
+  private boolean cantor;
+
+  private boolean clearScreen;
 
   public static void main(String args[]) {
     CantorColors cc = new CantorColors();
@@ -106,21 +108,46 @@ class CantorColors extends JFrame {
     showColors();
     controls.add(colorOut);
 
+    JPanel buttons = new JPanel();
+    buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+    controls.add(buttons);
+
+    JToggleButton cantorSwitch = new JToggleButton("Bisect vs. Cantor");
+    cantorSwitch.setSelected(false);
+    cantorSwitch.addActionListener(e -> {
+      cantor = cantorSwitch.isSelected();
+    });
+    buttons.add(cantorSwitch);
+
+    JToggleButton alternateSwitch = new JToggleButton("Alternate rotation");
+    alternateSwitch.setSelected(true);
+    alternateSwitch.addActionListener(e -> {
+      alternateSign = alternateSwitch.isSelected() ? -1 : 1;
+    });
+    buttons.add(alternateSwitch);
+
+    JButton clearButton = new JButton("Clear");
+    clearButton.addActionListener(l -> {
+      clearScreen = true;
+    });
+    buttons.add(clearButton);
+
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(600, 600);
     setVisible(true);
   }
 
   private JSlider addSlider(String text, int min, int max, int value) {
-    Box box = Box.createHorizontalBox();
-    controls.add(box);
+    JPanel row = new JPanel();
+    row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+    controls.add(row);
 
     JLabel label = new JLabel(text);
     label.setPreferredSize(new Dimension(150, (int) label.getPreferredSize().getHeight()));
-    box.add(label);
+    row.add(label);
 
     JSlider slider = new JSlider(min, max, value);
-    box.add(slider);
+    row.add(slider);
 
     return slider;
   }
@@ -142,6 +169,7 @@ class CantorColors extends JFrame {
   private void start() {
     transparency = 1000f;
     angleStepSize = 0.005;
+    alternateSign = -1;
     recursions = 7;
     colors = decodeColors(colorsList);
     showColors();
@@ -188,6 +216,11 @@ class CantorColors extends JFrame {
   }
 
   private void render(Graphics g) {
+    if (clearScreen) {
+      clear(g);
+      clearScreen = false;
+    }
+
     int size = min(canvas.getWidth(), canvas.getHeight());
     drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, recursions, g);
     angle += angleStepSize;
@@ -202,13 +235,29 @@ class CantorColors extends JFrame {
     // g.setColor(colors[times - 1]);
     drawMidCircle(x, y, r, g);
 
-    int x1 = (int) (r / 2 * cos(a));
-    int y1 = (int) (r / 2 * sin(a));
-    drawCantor(x + x1, y + y1, r / 2, -a, times - 1, g);
-    drawCantor(x - x1, y - y1, r / 2, -a, times - 1, g);
+    double nextAngel = alternateSign * a;
+
+    if (cantor) {
+      // Cantor set
+      int x1 = (int) (r / 3 * cos(a));
+      int y1 = (int) (r / 3 * sin(a));
+      drawCantor(x + 2 * x1, y + 2 * y1, r / 3, nextAngel, times - 1, g);
+      drawCantor(x - 2 * x1, y - 2 * y1, r / 3, nextAngel, times - 1, g);
+    } else {
+      // Bisect
+      int x1 = (int) (r / 2 * cos(a));
+      int y1 = (int) (r / 2 * sin(a));
+      drawCantor(x + x1, y + y1, r / 2, nextAngel, times - 1, g);
+      drawCantor(x - x1, y - y1, r / 2, nextAngel, times - 1, g);
+    }
   }
 
   private void drawMidCircle(int x, int y, int r, Graphics g) {
     g.drawOval(x - r, y - r, 2 * r, 2 * r);
+  }
+
+  private void clear(Graphics g) {
+    g.setColor(Color.white);
+    g.fillRect(0, 0, getWidth(), getHeight());
   }
 }
