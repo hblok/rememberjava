@@ -10,14 +10,8 @@
 
 * Regexp, Pattern, Match
 
-* Java doc parsing
-
 * Data strucuters
 list, tree, graph, etc.
-
-* EventBus
-https://github.com/google/guava/wiki/EventBusExplained
-https://google.github.io/guava/releases/21.0/api/docs/com/google/common/eventbus/EventBus.html
 
 
 * Recursion, fractal graphics
