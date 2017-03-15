@@ -7,10 +7,16 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Consumer;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,17 +34,15 @@ class CantorColors extends JFrame {
 
   private Canvas canvas;
 
-  private JPanel controls;
-
   private JPanel colorOut;
 
-  private String colorsList = "#000fff,#18A3AC,#F48024,#178CCB,#052049,#FBAF3F,#000fff";
+  private String colorsList =
+      "#000fff,#18A3AC,#F48024,#178CCB,#052049,#FBAF3F,#000fff";
+  // "#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB";
+  // "#722059,#A92268,#E02477,#DB7580,#D6C689,#722059,#A92268,#E02477";
+  // "#F28E98,#FF9985,#E1CBA6,#DFCFB8,#E7E4D3,#F28E98,#FF9985,#E1CBA6";
 
   private Color[] colors;
-  // "#18A3AC,#052049,#178CCB ,#FBAF3F,#F48024,#18A3AC,#052049,#178CCB"
-
-  // #722059,#A92268,#E02477,#DB7580,#D6C689,#722059,#A92268,#E02477
-  // #F28E98,#FF9985,#E1CBA6,#DFCFB8,#E7E4D3,#F28E98,#FF9985,#E1CBA6
 
   private double angle;
   private double angleStepSize;
@@ -54,6 +58,14 @@ class CantorColors extends JFrame {
 
   private boolean clearScreen;
 
+  private boolean save;
+
+  private int index;
+
+  private BufferedImage bufImg;
+
+  private Graphics imgG;
+
   public static void main(String args[]) {
     CantorColors cc = new CantorColors();
     cc.initUi();
@@ -66,28 +78,24 @@ class CantorColors extends JFrame {
     canvas = new Canvas();
     getContentPane().add(canvas, BorderLayout.CENTER);
 
-    controls = new JPanel();
+    JPanel controls = new JPanel();
     controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
     getContentPane().add(controls, BorderLayout.NORTH);
 
-    JSlider stepSize = addSlider("Rotation step size", 1, 100, 5);
-    stepSize.addChangeListener(e -> {
-      angleStepSize = log(stepSize.getValue());
+    addSlider(controls, "Rotation step size", 1, 100, 5, slider -> {
+      angleStepSize = log(slider.getValue());
     });
 
-    JSlider delayMs = addSlider("Frame delay", 0, 100, 0);
-    delayMs.addChangeListener(e -> {
-      sleepMs = delayMs.getValue();
+    addSlider(controls, "Frame delay", 0, 100, 0, slider -> {
+      sleepMs = slider.getValue();
     });
 
-    JSlider rec = addSlider("Recursions", 1, 20, 7);
-    rec.addChangeListener(e -> {
-      recursions = rec.getValue();
+    addSlider(controls, "Recursions", 1, 20, 7, slider -> {
+      recursions = slider.getValue();
     });
 
-    JSlider trans = addSlider("Transparency", 1, 1000, 1000);
-    trans.addChangeListener(e -> {
-      transparency = (float) trans.getValue();
+    addSlider(controls, "Transparency", 1, 1000, 1000, slider -> {
+      transparency = (float) slider.getValue();
       colors = decodeColors(colorsList);
       showColors();
     });
@@ -112,19 +120,18 @@ class CantorColors extends JFrame {
     buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
     controls.add(buttons);
 
-    JToggleButton cantorSwitch = new JToggleButton("Bisect vs. Cantor");
-    cantorSwitch.setSelected(false);
-    cantorSwitch.addActionListener(e -> {
-      cantor = cantorSwitch.isSelected();
+    addToggleButton(buttons, "Bisect vs. Cantor", false, button -> {
+      cantor = button.isSelected();
     });
-    buttons.add(cantorSwitch);
 
-    JToggleButton alternateSwitch = new JToggleButton("Alternate rotation");
-    alternateSwitch.setSelected(true);
-    alternateSwitch.addActionListener(e -> {
-      alternateSign = alternateSwitch.isSelected() ? -1 : 1;
+    addToggleButton(buttons, "Alternate rotation", true, button -> {
+      alternateSign = button.isSelected() ? -1 : 1;
     });
-    buttons.add(alternateSwitch);
+
+    addToggleButton(buttons, "Save PNGs", false, button -> {
+      save = button.isSelected();
+      index = 0;
+    });
 
     JButton clearButton = new JButton("Clear");
     clearButton.addActionListener(l -> {
@@ -132,12 +139,20 @@ class CantorColors extends JFrame {
     });
     buttons.add(clearButton);
 
+    canvas.addComponentListener(new ComponentAdapter() {
+      @Override
+      public void componentResized(ComponentEvent e) {
+        createRenderImage();
+      }
+    });
+
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(600, 600);
+    setSize(600, 738);
     setVisible(true);
   }
 
-  private JSlider addSlider(String text, int min, int max, int value) {
+  private void addSlider(JPanel controls, String text, int min, int max, int value,
+      Consumer<JSlider> changeListener) {
     JPanel row = new JPanel();
     row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
     controls.add(row);
@@ -149,7 +164,20 @@ class CantorColors extends JFrame {
     JSlider slider = new JSlider(min, max, value);
     row.add(slider);
 
-    return slider;
+    slider.addChangeListener(e -> {
+      changeListener.accept(slider);
+    });
+  }
+
+  private void addToggleButton(JPanel buttons, String text, boolean selected,
+      Consumer<JToggleButton> actionListener) {
+    JToggleButton button = new JToggleButton(text);
+    button.setSelected(selected);
+    buttons.add(button);
+
+    button.addActionListener(e -> {
+      actionListener.accept(button);
+    });
   }
 
   private void showColors() {
@@ -174,19 +202,37 @@ class CantorColors extends JFrame {
     colors = decodeColors(colorsList);
     showColors();
 
-    canvas.createBufferStrategy(3);
-    BufferStrategy strategy = canvas.getBufferStrategy();
+    createRenderImage();
+    Graphics g = canvas.getGraphics();
 
     new Thread(() -> {
       while (true) {
-        Graphics g = strategy.getDrawGraphics();
-        render(g);
-        g.dispose();
-        strategy.show();
+        render(imgG);
+
+        if (save && index++ % 3 == 0) {
+          saveImage(bufImg, index);
+        }
+
+        g.drawImage(bufImg, 0, 0, this);
 
         sleep(sleepMs);
       }
     }).start();
+  }
+
+  private void createRenderImage() {
+    bufImg = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    imgG = bufImg.createGraphics();
+    clear(imgG);
+  }
+
+  private void saveImage(BufferedImage bi, int i) {
+    try {
+      String name = String.format("/tmp/cantor%05d.png", i);
+      ImageIO.write(bi, "PNG", new File(name));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -196,17 +242,22 @@ class CantorColors extends JFrame {
    * setting from the UI.
    */
   private Color[] decodeColors(String hexColors) {
-    String[] split = hexColors.replaceAll(" +", "").split(",");
-    Color[] result = new Color[split.length];
+    try {
+      String[] split = hexColors.replaceAll(" +", "").split(",");
+      Color[] result = new Color[split.length];
 
-    for (int i = 0; i < split.length; i++) {
-      String str = (split[i].startsWith("#") ? "" : "#") + split[i];
-      float[] comp = Color.decode(str).getRGBComponents(null);
-      float a = max(0, min(1f, ((float) i) / transparency));
-      result[i] = new Color(comp[0], comp[1], comp[2], a);
+      for (int i = 0; i < split.length; i++) {
+        String str = (split[i].startsWith("#") ? "" : "#") + split[i];
+        float[] comp = Color.decode(str).getRGBComponents(null);
+        float a = max(0, min(1f, ((float) i) / transparency));
+        result[i] = new Color(comp[0], comp[1], comp[2], a);
+      }
+
+      return result;
+    } catch (Exception e) {
+      System.out.println(e);
+      return colors;
     }
-
-    return result;
   }
 
   private void sleep(long ms) {
@@ -222,7 +273,7 @@ class CantorColors extends JFrame {
     }
 
     int size = min(canvas.getWidth(), canvas.getHeight());
-    drawCantor(size / 2, size / 2, (int) (size * 0.4), angle, recursions, g);
+    drawCantor(size / 2, size / 2, (int) (size * 0.45), angle, recursions, g);
     angle += angleStepSize;
   }
 
@@ -232,7 +283,6 @@ class CantorColors extends JFrame {
     }
 
     g.setColor(colors[times % colors.length]);
-    // g.setColor(colors[times - 1]);
     drawMidCircle(x, y, r, g);
 
     double nextAngel = alternateSign * a;
@@ -258,6 +308,6 @@ class CantorColors extends JFrame {
 
   private void clear(Graphics g) {
     g.setColor(Color.white);
-    g.fillRect(0, 0, getWidth(), getHeight());
+    g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 }
