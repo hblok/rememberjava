@@ -12,8 +12,11 @@ permalink: /classes/
   {% for post in site.posts %}
     {% assign lines = post | newline_to_br | split: '<br />' %}
     {% for line in lines %}
+      {% if line contains "rememberjava" %}
+        {% continue %}
+      {% endif %}
       {% if line contains "import" and line contains ";" %}
-         {{linesplit}}{{ line | strip_newlines | replace: "import", "" | replace: "static", "" | replace: ";", "" | strip_html | replace: " ","" }}{{itemsplit}}{{ post.title }}{{itemsplit}}{{ post.url }}{{itemsplit}}{{ post.date }}<br>
+         {{linesplit}}{{ line | strip_newlines | replace: "import", "" | replace: "static", "" | replace: ";", "" | replace: ".*", "" | strip_html | replace: " ","" }}{{itemsplit}}{{ post.title }}{{itemsplit}}{{ post.url }}{{itemsplit}}{{ post.date }}<br>
       {% endif %}
     {% endfor %}
   {% endfor %}
