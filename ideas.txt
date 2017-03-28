@@ -3,6 +3,8 @@
 
 * New Java Time & Date API
 
+* JThumb (GThumb)
+
 * SQLite
   https://www.tutorialspoint.com/sqlite/sqlite_java.htm
   http://stackoverflow.com/a/41241
