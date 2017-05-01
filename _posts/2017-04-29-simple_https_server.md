@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  TLS 1.2 over SUN HttpServer
+title:  TLS 1.2 over SUN HttpsServer
 date:   2017-04-29
 categories: http
 tags: http https server tls ssl
@@ -10,7 +10,7 @@ Security can be tricky, HTTPS and TLS no less so. There are many configuration d
 
 The main component of Java TLS communication is the [Java Secure Socket Extension (JSSE)][jsse]. A number of [algorithms][jdk8-crypto-algo] and [cryptographic providers][jdk8-crypto-providers] are supported. The central class is the [*SSLContext*][SSLContext], supported by the [*KeyStore*][KeyStore]. These classes load and initialise the relevant keys, certificates, and protocols which are later used by a HTTPS server (or client). See the Oracle blog, for another brief [introduction to TLS 1.2][oracle-blog-tls-default], and [tips on diagnosing][oracle-blog-tls-diagnosing] the communication. In particular, notice the unlimited strength implementations, which have to be [downloaded separately][jdk8-unlimited], and copied to *JAVA_HOME/lib/security*.
 
-The example below shows how the certificate and key are loaded from a Java KeyStore (.jks) file, and used to initialise the *SSLContext* with the TLS protocol. The *SSLContext* is passed to the SUN *HttpServer* through a *HttpsConfigurator*. The *HttpServer* implementation takes care of the rest, and the static file handler is the same as seen in the [plain HTTP based example][http-example].
+The example below shows how the certificate and key are loaded from a Java KeyStore (.jks) file, and used to initialise the *SSLContext* with the TLS protocol. The *SSLContext* is passed to the SUN *HttpsServer* through a *HttpsConfigurator*. The *HttpsServer* implementation takes care of the rest, and the static file handler is the same as seen in the [plain HTTP based example][http-example].
 
 {% highlight java %}
 {% include includemethod filename='src/com/rememberjava/http/SimpleHttpsServer.java' method='void start()' %}
