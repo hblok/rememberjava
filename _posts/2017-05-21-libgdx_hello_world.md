@@ -1,6 +1,4 @@
 ---
-published: false
-
 layout: post
 title:  Hello world with LibGDX
 date:   2017-05-21
