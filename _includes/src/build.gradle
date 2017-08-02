@@ -17,8 +17,13 @@ sourceSets {
       exclude 'com/rememberjava/midi/**'
       exclude 'com/rememberjava/performance/**'
       exclude 'com/rememberjava/ui/**'
+      
       exclude 'com/rememberjava/lambda/ParallelCount*'
       exclude 'com/rememberjava/http/SfWebsocketServerTest*'
+
+      exclude 'com/rememberjava/apache/CircularFifoQueueTest*'
+      exclude 'com/rememberjava/junit/MockitoTest*'
+      exclude 'com/rememberjava/calc/ModelTest*'
     }
   }
 }
