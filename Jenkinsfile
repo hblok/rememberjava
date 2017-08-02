@@ -2,12 +2,10 @@ pipeline {
   agent any
 
   stages {
-    stage('Build') {
+    stage('Test') {
       steps {
-        echo 'Building..'
-	sh 'mkdir bin'
-	sh 'javac src/HelloWorld.java -d bin'
-	sh 'ls bin'
+        echo 'Testing..'
+	sh 'cd src; /usr/bin/gradle test'
       }
     }
   }
