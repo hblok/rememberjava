@@ -4,6 +4,21 @@ sourceSets {
   main {
     java {
       srcDirs = ['src']
+      exclude 'com/rememberjava/doc/**'
+      exclude 'com/rememberjava/bitcoin/**'
+    }
+  }
+
+  test {
+    java {
+      srcDirs = ['.']
+      exclude 'com/rememberjava/doc/**'
+      exclude 'com/rememberjava/bitcoin/**'
+      exclude 'com/rememberjava/midi/**'
+      exclude 'com/rememberjava/performance/**'
+      exclude 'com/rememberjava/ui/**'
+      exclude 'com/rememberjava/lambda/ParallelCount*'
+      exclude 'com/rememberjava/http/SfWebsocketServerTest*'
     }
   }
 }
@@ -14,6 +29,7 @@ repositories {
 }
 
 dependencies {
+  compile 'org.apache.commons:commons-collections4:4.0'
   compile 'org.apache.commons:commons-io:1.3.2'
 
   compile 'org.slf4j:slf4j-api:1.7.21'
@@ -32,6 +48,7 @@ dependencies {
   compile 'com.badlogicgames.gdx:gdx-platform:1.9.6:natives-desktop'
   compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.6'
 
+  compile 'org.hamcrest:hamcrest-all:1.3'
   testCompile 'org.mockito:mockito-all:1.10.19'
   testCompile 'junit:junit:4.12'
 }
