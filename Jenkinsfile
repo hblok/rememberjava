@@ -5,7 +5,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing..'
-	sh 'cd src; /usr/bin/gradle test'
+	sh 'cd src; gradle test'
       }
     }
   }
