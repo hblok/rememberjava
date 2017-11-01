@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        sh 'find src/build/test-results -name "*xml" -delete'
+        sh 'find src/build/test-results -name "*xml" -delete || true'
       }
     }
       
