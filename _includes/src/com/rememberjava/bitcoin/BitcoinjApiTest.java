@@ -104,7 +104,7 @@ public class BitcoinjApiTest {
    * are downloaded. This can take 1 to 2 minutes. If information is stale, it
    * can also take a minute to update.
    * 
-   * The walled used in this test is separate from the other tests.
+   * The wallet used in this test is separate from the other tests.
    */
   @Test
   public void testSync() {
@@ -156,7 +156,7 @@ public class BitcoinjApiTest {
    * (This test is commented out to avoid blocking the other tests).
    */
   // @Test
-  public void testReceive() {
+  public void disabled_testReceive() {
     startSync();
 
     wallet.addCoinsReceivedEventListener(this::coinsReceived);
@@ -186,7 +186,7 @@ public class BitcoinjApiTest {
    * inadvertently sending away our money.
    */
   // @Test
-  public void testSend() throws InsufficientMoneyException {
+  public void disabled_testSend() throws InsufficientMoneyException {
     startSync();
 
     // Adjust how many coins to send. E.g. the minimum; or everything.
