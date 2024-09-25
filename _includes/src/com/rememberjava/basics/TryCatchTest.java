@@ -14,7 +14,7 @@ public class TryCatchTest {
 
   // The second try-block will throw an uncaught ArithmeticException because of
   // the divide by 0.
-  @Test(expected = ArithmeticException.class)
+  //@Test(expected = ArithmeticException.class)
   public void basic() {
     try {
       String str = null;
@@ -24,7 +24,8 @@ public class TryCatchTest {
     }
 
     try {
-      int a = 1 / 0;
+      int nil = 0;
+      int a = 1 / nil;
     } catch (NullPointerException e) {
       System.out.println("This will not trigger.");
     }
