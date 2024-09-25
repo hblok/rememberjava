@@ -3,6 +3,9 @@ ruby RUBY_VERSION
 
 gem "jekyll", ">= 3.8"
 gem "minima", "~> 2.5"
+gem "webrick", ">= 1.8.2"
+gem "rexml", ">= 3.3.6"
+
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.

@@ -16,4 +16,8 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - bazel-*
+  - src
+  - bazel-bin
+  - bazel-out
+  - bazel-rememberjava
+  - bazel-testlogs
