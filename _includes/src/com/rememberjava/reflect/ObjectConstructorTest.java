@@ -90,7 +90,8 @@ public class ObjectConstructorTest {
     return constructor.newInstance(parameters);
   }
 
-  @SuppressWarnings("serial")
+    //@SuppressWarnings("serial")
+  @SuppressWarnings("DoubleBraceInitialization")
   Map<Class<?>, Function<String, ?>> classConstructorMap = new HashMap<Class<?>, Function<String, ?>>() { {
     put(String.class, String::new);
     put(Integer.TYPE, Integer::new);
