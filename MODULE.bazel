@@ -7,6 +7,7 @@ maven_ext.install(
         "org.apache.commons:commons-collections4:4.4",
 	"org.bitcoinj:bitcoinj-core:0.14.7",
 	"org.slf4j:slf4j-simple:1.7.5",
+	"org.simpleframework:simple-http:6.0.1",
     ],
     repositories = [
         "https://repo1.maven.org/maven2",
