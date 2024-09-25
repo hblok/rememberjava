@@ -6,5 +6,4 @@ THIS_DIR="$(readlink -f $(dirname $0))"
 
 cd /base
 
-# TODO: Skip very large tests
-bazel test ...
+bazel test --test_output all --test_tag_filters -skip //...

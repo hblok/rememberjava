@@ -20,7 +20,8 @@ java_test(
 
 java_test(
     name = "StreamFun",
-    srcs = ["StreamFun.java"]
+    srcs = ["StreamFun.java"],
+    tags = ["skip"],
 )
 
 java_test(

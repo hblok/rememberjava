@@ -1,8 +1,8 @@
-# TODO: Large test
-# java_test(
-#     name = "AutoBoxing",
-#     srcs = ["AutoBoxing.java"]
-# )
+java_test(
+    name = "AutoBoxing",
+    srcs = ["AutoBoxing.java"],
+    tags = ["skip"]  # TODO
+)
 
 java_test(
     name = "MetricsApiTest",

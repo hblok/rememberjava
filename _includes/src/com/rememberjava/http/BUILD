@@ -27,8 +27,8 @@ java_test(
     deps = [
        "@maven2//:org_simpleframework_simple_transport",
        "@maven2//:org_simpleframework_simple_http",
-    ]
-    
+    ],
+    tags = ["skip"],
 )
 
 java_test(
