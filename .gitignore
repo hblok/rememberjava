@@ -28,3 +28,7 @@ _includes/src/build
 
 # Eclipse
 _includes/src/.settings
+
+# Bazel
+bazel-*
+MODULE.bazel.lock
