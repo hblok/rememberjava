@@ -32,3 +32,5 @@ _includes/src/.settings
 # Bazel
 bazel-*
 MODULE.bazel.lock
+dist/
+
