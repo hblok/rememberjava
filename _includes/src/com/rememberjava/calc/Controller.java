@@ -4,7 +4,7 @@ package com.rememberjava.calc;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 class Controller {
 
