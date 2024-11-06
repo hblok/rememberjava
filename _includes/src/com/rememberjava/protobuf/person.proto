@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.rememberjava.protobuf";
+option java_multiple_files = true;
+
+message Person {
+  string firstname = 1;
+  string lastname = 2;
+  int32 id = 3;
+  string email = 4;
+}
