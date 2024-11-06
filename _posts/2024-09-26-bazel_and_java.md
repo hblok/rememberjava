@@ -83,10 +83,10 @@ To run all test at and below the current directory, the `...` query is used:
 bazel test ...
 {% endhighlight %}
 
-A `/` at the beginning references the top level. Thus, this runs all tests:
+A `//` at the beginning references the top level. Thus, this runs all tests:
 
 {% highlight shell %}
-bazel test ...
+bazel test //...
 {% endhighlight %}
 
 To execute a binary, the run command is used:

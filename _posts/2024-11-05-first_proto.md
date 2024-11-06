@@ -5,7 +5,7 @@ layout: post
 title:  Protocol Buffers
 date:   2024-11-05
 categories: protobuf
-tags: protobuf
+tags: protobuf bazel
 ---
 
 [Protocol Buffers][proto_doc] (aka "protobufs") is another Google technology which integrates neatly with Java (and other languages). As their tag-lines says: "Protocol Buffers are language-neutral, platform-neutral extensible mechanisms for serializing structured data".
