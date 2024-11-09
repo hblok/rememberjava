@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "_includes/src/com/rememberjava/protobuf/person.proto";
+
+option java_package = "com.rememberjava.grpc";
+option java_multiple_files = true;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+message HelloRequest {
+  Person from = 1;
+  Person to = 2;
+
+  string message = 3;
+}
+
+message HelloReply {
+  string reply = 1;
+}
